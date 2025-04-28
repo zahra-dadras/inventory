@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+html,
+body {
+	background: transparent;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+ul,
+li,
+h1,
+h2,
+span {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style: none;
+}

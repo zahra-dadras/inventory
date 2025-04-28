@@ -1,0 +1,43 @@
+.menu-conten {
+    width: 100%;
+    height: 100%;
+}
+
+ul {
+    list-style-type: none;
+    direction: rtl;
+    color: #8b9fb4;
+    gap: 5px;
+}
+
+li {
+    cursor: pointer;
+    list-style-position: inside;
+    padding-right: 5px;
+
+}
+
+.hover:hover {
+    background-color: #dcdcdf;
+}
+
+.anbar-setting {
+    display: flex;
+    flex-direction: column;
+
+
+    ul {
+        list-style-type: none;
+        padding-right: 35px;
+    }
+}
+
+
+
+.test {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding-right: 5px;
+}

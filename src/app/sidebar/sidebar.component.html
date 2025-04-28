@@ -1,0 +1,52 @@
+<div class="menu-content">
+    <ul>
+        <li class="anbar-setting">
+            <div class="test hover" (click)="test()">
+                <i class="fa fa-angle-right pull-left" *ngIf="!showClickIcon"></i>
+                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="showClickIcon"></i>
+                <p class="anbar-text">{{appEnum.STOREROOMS_LIST}}</p>
+            </div>
+
+            <ul *ngIf="showClickIcon">
+                <li class="hover" (click)="storeroomAction()">{{ appEnum.STOREROOM_CREATE_AND_EDIT_FORM }}</li>
+            </ul>
+
+        </li>
+        <li class="anbar-setting">
+            <div class="test hover" (click)="productManagementAction()">
+                <i class="fa fa-angle-right pull-left" *ngIf="!productManagement"></i>
+                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="productManagement"></i>
+                <p class="anbar-text">{{appEnum.COMMODITY_BANK}}</p>
+            </div>
+
+            <ul *ngIf="productManagement">
+                <li class="hover" (click)="productBankAction()">{{appEnum.COMMODITY_CREATE_AND_EDIT_FORM}}</li>
+            </ul>
+
+        </li>
+        <li class="anbar-setting">
+            <div class="test hover" (click)="anbarReportAction()">
+                <i class="fa fa-angle-right pull-left" *ngIf="!anbarReport"></i>
+                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="anbarReport"></i>
+                <p class="anbar-text">{{appEnum.STOREROOM_DOCUMENT_LIST}}</p>
+            </div>
+
+            <ul *ngIf="anbarReport">
+                <li class="hover">{{appEnum.STOREROOM_DOCUMENT_CREATE_AND_EDIT_FORM}}</li>
+            </ul>
+
+        </li>
+        <li class="anbar-setting">
+            <div class="test hover" (click)="anbarSettingAction()">
+                <i class="fa fa-angle-right pull-left" *ngIf="!anbarSetting"></i>
+                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="anbarSetting"></i>
+                <p class="anbar-text">{{appEnum.STOREROOM_SETTING}}</p>
+            </div>
+
+            <ul *ngIf="anbarSetting">
+                <li class="hover">{{ appEnum.STOREROOM_CREATE_AND_EDIT_FORM }}</li>
+            </ul>
+
+        </li>
+    </ul>
+</div>

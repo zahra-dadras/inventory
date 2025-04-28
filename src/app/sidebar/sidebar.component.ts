@@ -25,7 +25,7 @@ export class SidebarComponent {
   }
 
   protected storeroomAction(): void {
-    this.router.navigate(['/storeroom-info'])
+    this.router.navigate(['/warehouse-list'])
   }
 
   public test() {

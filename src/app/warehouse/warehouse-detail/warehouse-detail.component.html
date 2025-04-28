@@ -1,0 +1,68 @@
+<div class="content">
+    <div class="form">
+        <div class="text">{{appEnum.STOREROOM_INFO_CREATE_AND_EDIT_FORM}}
+        </div>
+        <form [formGroup]="myForm" class="form-container">
+            <div class="item-style">
+                <label for="storeroomTitle">{{appEnum.STOREROOM_TITLE}}</label>
+                <input id="storeroomTitle" formControlName="storeroomTitle" placeholder="{{appEnum.STOREROOM_TITLE}}" />
+            </div>
+            <div class="item-style">
+                <label for="storeroomId">{{appEnum.STOREROOM_ID}}</label>
+                <input id="storeroomId" formControlName="storeroomId" placeholder="{{appEnum.STOREROOM_ID}}" />
+            </div>
+
+            <div class="item-style">
+                <label for="status">{{appEnum.STATUS}}</label>
+                <select id="status" formControlName="status">
+                    <option *ngFor="let status of statuses" value="status">{{status}}</option>
+                </select>
+            </div>
+            <div class="item-style">
+                <label for="storeroomType">{{appEnum.STOREROOM_TYPE}}</label>
+                <select id="storeroomType" formControlName="storeroomType">
+                    <option *ngFor="let storeroomType of storeroomTypes" value="storeroomType">{{storeroomType}}
+                    </option>
+                </select>
+            </div>
+            <div class="item-style">
+                <label for="manager">{{appEnum.MANAGER}}</label>
+                <input id="manager" formControlName="manager" placeholder="{{appEnum.MANAGER}}" />
+            </div>
+            <div class="text">
+                {{appEnum.STOREROOM_ENVIRONMENTAL_CONDITIONS}}</div>
+            <div class="storeroom-environmental-conditions">
+
+                <div class="item-style">
+                    <label for="minTemperature">{{appEnum.MIN_TEMPERATURE}}</label>
+                    <input id="minTemperature" formControlName="minTemperature" />
+                </div>
+                <div class="item-style">
+                    <label for="maxTemperature">{{appEnum.MAX_TEMPERATURE}}</label>
+                    <input id="maxTemperature" formControlName="maxTemperature" />
+                </div>
+                <div class="item-style">
+                    <label for="minHumidity">{{appEnum.MIN_HUMIDITY}}</label>
+                    <input id="minHumidity" formControlName="minHumidity" />
+                </div>
+                <div class="item-style">
+                    <label for="maxHumidity">{{appEnum.MAX_HUMIDITY}}</label>
+                    <input id="maxHumidity" formControlName="minHumidity" />
+                </div>
+            </div>
+        </form>
+        <div class="button">
+            <button type="submit" [disabled]="myForm.invalid"
+                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}">{{appEnum.SAVE}}</button>
+            <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
+        </div>
+    </div>
+    <div class="commodity-in-storeroom-list">
+        <div class="text">
+            {{appEnum.COMMODITY_TO_STORE}}
+        </div>
+        <ag-grid-angular [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
+            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine">
+        </ag-grid-angular>
+    </div>
+</div>

@@ -1,0 +1,259 @@
+.content {
+    width: 100%;
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding-top: 20px;
+    overflow: auto;
+  }
+
+  .text {
+    padding: 10px;
+    direction: rtl;
+    font-weight: bold;
+    height: 20px;
+    width: 95%;
+}
+  
+  .form {
+    width: 90%;
+    height: 65%;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .form-container {
+    display: flex;
+    direction: rtl;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+  
+  .item-style {
+    height: 50px;
+    width: calc(33.33% - 10px);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    input {
+      width: calc(50% - 10px);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    input {
+      width: 100%;
+    }
+  }
+  
+  .dropdown-container {
+    width: 250px;
+    margin: 20px auto;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  select {
+  
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* ایجاد افکت برای تغییرات */
+  }
+  
+  select:focus {
+    border-color: #4caf50;
+    background-color: #eaf7e3;
+    outline: none;
+  }
+  
+  option {
+    padding: 10px;
+    background-color: white;
+    color: #333;
+  }
+  
+  option:hover {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  select:hover {
+    border-color: #4caf50;
+    background-color: #f1f1f1;
+  }
+  
+  .storeroom-environmental-conditions {
+    width: 100% !important;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 10px;
+  }
+  
+  .button {
+    padding: 10px;
+  }
+  
+  .active-button {
+  
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .close {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
+  .inactive-button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+  
+  .commodity-in-storeroom-list {
+    width: 98%;
+    height: calc(100% - 35px);
+    background-color: #e0e0e0;
+    border: 2px #e0e0e0 solid;
+    border-radius: 10px;
+  }
+  
+  ::ng-deep {
+    .ag-theme-alpine {
+        height: 100%;
+        width: 100%;
+        width: 100%;
+        // height: calc(100% - 35px);
+        overflow-y: auto;
+    }
+  
+    .ag-cell-label-container {
+      direction: rtl;
+    }
+  
+    .edit-btn,
+    .delete-btn {
+      padding: 5px 10px;
+      margin: 2px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+  
+    .edit-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+  
+    .edit-btn:hover {
+      background-color: #45a049;
+    }
+  
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+    }
+  
+    .delete-btn:hover {
+      background-color: #e53935;
+    }
+  
+  
+    .ag-cell {
+      box-sizing: border-box;
+      padding: 10px;
+      font-size: 14px;
+      font-family: 'Arial', sans-serif;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    .ag-cell:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.02);
+    }
+  
+    .ag-cell.ag-cell-range-selection {
+      background-color: #c6e7ff;
+      color: #003366;
+      font-weight: bold;
+    }
+  
+    .ag-header-cell {
+      box-sizing: border-box;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      background-color: #f0f0f0;
+      border-bottom: 2px solid #ddd;
+    }
+  
+    .ag-cell-label-container {
+      padding: 0;
+    }
+  
+    .ag-header-cell:hover {
+      background-color: #e0e0e0;
+    }
+  
+    .ag-row,
+    .ag-cell {
+      border: 1px solid #f1f1f1;
+    }
+  
+    .ag-row:hover {
+      background-color: #f1f1f1;
+    }
+  
+    .ag-ltr .ag-cell {
+      padding: 5px 10px;
+    }
+  }

@@ -4,12 +4,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AppEnum } from '../../enum/app-enum.enum';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProductEditDialogComponent } from '../product-edit-dialog/product-edit-dialog.component';
-import { ProductCommodityListComponent } from '../product-commodity-list/product-commodity-list.component';
+import { ProductListComponent } from '../product-list/product-list.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, ProductCommodityListComponent, MatDialogModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, ProductListComponent, MatDialogModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })

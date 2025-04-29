@@ -17,10 +17,10 @@ import { MatDialog } from '@angular/material/dialog';
     MatPaginatorModule,
     MatSortModule,
     AgGridModule],
-  templateUrl: './product-commodity-list.component.html',
-  styleUrl: './product-commodity-list.component.scss'
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.scss'
 })
-export class ProductCommodityListComponent {
+export class ProductListComponent {
   @Output() editStoreroom = new EventEmitter<any>();
   @Input() storeroomDialogData: any;
 

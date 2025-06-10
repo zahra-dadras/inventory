@@ -1,0 +1,15 @@
+<div class="ag-grid-container">
+    <div class="buttons">
+        <button class="add-button" type="button" aria-label="Add" (click)="addCommodityType()">
+            <i class="fa fa-plus"></i>
+        </button>
+        <div class="text">{{appEnum.COMMODITY_TYPE_LIST}}</div>
+    </div>
+    <ag-grid-angular
+    [columnDefs]="columnDefs"
+    [rowData]="rowData"
+    [gridOptions]="gridOptions"
+    [defaultColDef]="defaultColDef" [pagination]="true"
+     domLayout="autoHeight" class="ag-theme-alpine"
+    ></ag-grid-angular>
+</div>

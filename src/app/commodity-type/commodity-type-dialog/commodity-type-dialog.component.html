@@ -1,0 +1,24 @@
+<div class="content">
+    <div class="text">{{appEnum.COMMODITY_TYPE_FORM}}</div>
+    <form [formGroup]="myForm" class="form-container">
+        <div>
+            <label for="commodityTypeCode">{{appEnum.COMMODITY_TYPE_CODE}}</label>
+            <input id="commodityTypeCode" formControlName="commodityTypeCode"
+                placeholder="{{appEnum.COMMODITY_TYPE_CODE}}" />
+        </div>
+        <div>
+            <label for="commodityTypeTitle">{{appEnum.COMMODITY_TYPE_TITLE}}</label>
+            <input id="commodityTypeTitle" type="text" formControlName="commodityTypeTitle" placeholder="{{appEnum.COMMODITY_TYPE_TITLE}}" />
+        </div>
+        <div>
+            <label for="createDate">{{appEnum.CREATE_DATE}}</label>
+            <input id="createDate" type="text" formControlName="createDate" readonly  />
+        </div>
+    </form>
+    <div class="button">
+        <button type="submit" [disabled]="myForm.invalid"
+            [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" class="active-button"
+            (click)="onConfirm()">{{appEnum.SAVE_COMMODITY}}</button>
+        <button type="submit" class="close" (click)="onCancel()">{{appEnum.CLOSE}}</button>
+    </div>
+</div>

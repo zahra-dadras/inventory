@@ -28,6 +28,10 @@ export class SidebarComponent {
     this.router.navigate(['/warehouse-list'])
   }
 
+  protected commodityTypeAction(): void {
+    this.router.navigate(['/commodity-type'])
+  }
+
   public test() {
     this.showClickIcon = !this.showClickIcon
   }

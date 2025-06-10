@@ -3,10 +3,12 @@ import { WarehouseComponent } from './warehouse/warehouse.component';
 import { WarehouseDetailComponent } from './warehouse/warehouse-detail/warehouse-detail.component';
 import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { CommodityTypeComponent } from './commodity-type/commodity-type.component';
 
 export const routes: Routes = [
     {path: 'warehouse-list' , component: WarehouseComponent},
     {path: 'warehouse/detail', component: WarehouseDetailComponent},
     {path: 'product' , component: ProductComponent},
     {path: 'product/detail', component: ProductDetailComponent},
+    {path: 'commodity-type', component: CommodityTypeComponent}
 ];

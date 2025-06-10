@@ -36,5 +36,10 @@ export enum AppEnum {
     "MIN_HUMIDITY" = "کمینه رطوبت(%)",
     "MAX_HUMIDITY" = "بیشینه رطوبت(%)",
     "SAVE"= "ذخیره سازی",
-    "INVENTORY" = "موجودی در انبار"
+    "INVENTORY" = "موجودی در انبار",
+    "COMMODITY_TYPE_LIST" = "لیست ماهیت کالا",
+    "CREATE_DATE" = "تاریخ ثبت",
+    "COMMODITY_TYPE_TITLE"= "عنوان ماهیت کالا",
+    "COMMODITY_TYPE_CODE" = "کد ماهیت کالا",
+    "COMMODITY_TYPE_FORM" = "فرم ماهیت کالا"
 }

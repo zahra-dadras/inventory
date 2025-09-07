@@ -5,25 +5,25 @@
         <div>
             <label for="storeroomTitle">{{appEnum.STOREROOM_TITLE}}</label>
             <select id="storeroomTitle" formControlName="storeroomTitle">
-                <option *ngFor="let storeroomTitle of storeroomTitles " value="storeroomTitle.id">
-                    {{storeroomTitle.name}}</option>
+                <option *ngFor="let storeroomTitle of storeroomList " [ngValue]="storeroomTitle.id">
+                    {{storeroomTitle.storeroomTitle}}</option>
             </select>
         </div>
 
         <div>
             <label for="storeroomId">{{appEnum.STOREROOM_ID}}</label>
-            <input id="storeroomId" formControlName="storeroomId" placeholder="{{appEnum.STOREROOM_ID}}" />
+            <input id="storeroomId" formControlName="storeroomCode" placeholder="{{appEnum.STOREROOM_ID}}" />
         </div>
 
         <div>
             <label for="storeroomManager">{{appEnum.STOREROOM_MANAGER}}</label>
-            <input id="storeroomManager" formControlName="storeroomManager"
+            <input id="storeroomManager" formControlName="storeroomChairman"
                 placeholder="{{appEnum.STOREROOM_MANAGER}}" />
         </div>
 
         <div>
             <label for="storeroomType">{{appEnum.STOREROOM_TYPE}}</label>
-            <input id="storeroomType" formControlName="storeroomType" placeholder="{{appEnum.STOREROOM_TYPE}}" />
+            <input id="storeroomType" formControlName="storeroomPersianTitle" placeholder="{{appEnum.STOREROOM_TYPE}}" />
         </div>
 
     </form>

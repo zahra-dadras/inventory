@@ -5,8 +5,9 @@
         </button>
         <div class="text">{{appEnum.STOREROOMS_LIST}}</div>
     </div>
-    <ag-grid-angular [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
+    <ag-grid-angular   *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
         [defaultColDef]="defaultColDef" [pagination]="true"
          domLayout="autoHeight"
-        class="ag-theme-alpine"></ag-grid-angular>
+        class="ag-theme-alpine"
+        (gridReady)="onGridReady($event)"></ag-grid-angular>
 </div>

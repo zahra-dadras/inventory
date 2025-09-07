@@ -2,29 +2,34 @@
     width: 100%;
     height: 100%;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .buttons {
     width: 100%;
     height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // flex-direction: initial;
+    // direction: rtl;
+}
+.text{
     width: 100%;
     height: 35px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.text {
-    padding: 10px;
     direction: rtl;
-    font-weight: bold;
-    height: 20px;
 }
 
 .add-button {
     width: 30px;
     height: 30px;
     background-color: #28a745;
+    border: none;
     border-radius: 50%;
     color: white;
     display: flex;
@@ -33,11 +38,17 @@
     font-size: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-    border: 0;
 }
 
 .add-button:hover {
     background-color: #218838;
+}
+
+
+.ag-theme-alpine {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
 }
 
 ::ng-deep {
@@ -91,10 +102,10 @@
         transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-    // .ag-cell:hover {
-    //     background-color: #e0e0e0;
-    //     transform: scale(1.02);
-    // }
+    .ag-cell:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.02);
+    }
 
     .ag-cell.ag-cell-range-selection {
         background-color: #c6e7ff;
@@ -105,31 +116,28 @@
     .ag-header-cell {
         box-sizing: border-box;
         font-size: 16px;
-        font-weight: 700;
-        // color: #333;
-        background-color: #c2e0f8;
+        font-weight: bold;
+        color: #333;
+        background-color: #f0f0f0;
         border-bottom: 2px solid #ddd;
     }
-    .ag-header-cell:hover {
-        background-color: #E0F2FE !important; /* رنگ آبی خیلی روشن */
-        cursor: pointer;
-      }
-      
 
     .ag-cell-label-container {
         padding: 0;
     }
 
-   
+    .ag-header-cell:hover {
+        background-color: #e0e0e0;
+    }
 
     .ag-row,
     .ag-cell {
         border: 1px solid #f1f1f1;
     }
 
-    // .ag-row:hover {
-    //     background-color: #f1f1f1;
-    // }
+    .ag-row:hover {
+        background-color: #f1f1f1;
+    }
 
     .ag-ltr .ag-cell {
         padding: 5px 10px;

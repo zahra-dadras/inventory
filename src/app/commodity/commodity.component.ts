@@ -1,40 +1,40 @@
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
   Inject,
   NgZone,
+  OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { AppEnum } from '../enum/app-enum.enum';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { AgGridModule } from 'ag-grid-angular';
-import {
-  AllCommunityModule,
-  ClientSideRowModelModule,
-  ColDef,
-  GridOptions,
-  ICellRendererParams,
-  ModuleRegistry,
-} from 'ag-grid-community';
+import { AppEnum } from '../enum/app-enum.enum';
+import { ColDef, GridOptions, ICellRendererParams } from 'ag-grid-community';
 import { Router } from '@angular/router';
-import { StoreroomService } from '../services/storeroom.service';
-import { StoreroomModel } from '../models/storeroom.model';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommodityService } from '../services/commodity.service';
+import { CommodityModel } from '../models/commodity.model';
 import moment from 'moment-jalaali';
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-
-ModuleRegistry.registerModules([AllCommunityModule]);
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-warehouse',
+  selector: 'app-commodity',
   standalone: true,
-  imports: [CommonModule, AgGridModule],
-  templateUrl: './warehouse.component.html',
-  styleUrl: './warehouse.component.scss',
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    AgGridModule,
+  ],
+  templateUrl: './commodity.component.html',
+  styleUrl: './commodity.component.scss',
 })
-export class WarehouseComponent {
+export class CommodityComponent implements OnInit {
   protected appEnum = AppEnum;
-  protected rowData: StoreroomModel[] = [];
 
   columnDefs: ColDef[] = [
     {
@@ -47,7 +47,6 @@ export class WarehouseComponent {
         editButton.innerText = 'Edit';
         editButton.className = 'edit-btn';
         editButton.addEventListener('click', () => this.editRow(params));
-
         const deleteButton = document.createElement('button');
         deleteButton.innerText = 'Delete';
         deleteButton.className = 'delete-btn';
@@ -60,53 +59,52 @@ export class WarehouseComponent {
       },
     },
     {
-      headerName: this.appEnum.STATUS,
-      field: 'status',
+      headerName: this.appEnum.CREATE_DATE,
+      field: 'createDate',
+      valueFormatter: (params) =>
+        moment(params.value).locale('fa').format('jYYYY/jMM/jDD'),
+    },
+    {
+      headerName: this.appEnum.MEASUREMENT_UNIT,
+      field: 'measurementUnitTitle',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,
       filter: true,
     },
     {
-      headerName: this.appEnum.STOREROOM_MANAGER,
-      field: 'storeroomChairman',
+      headerName: this.appEnum.COMMODITY_TYPE,
+      field: 'commodityTypeTitle',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,
       filter: true,
     },
     {
-      headerName: this.appEnum.STOREROOM_TYPE,
-      field: 'storeroomTypePersianTitle',
+      headerName: this.appEnum.COMMODITY_ENGLISH_TITLE,
+      field: 'commodityEnglishTitle',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,
       filter: true,
     },
     {
-      headerName: this.appEnum.STOREROOM_TITLE,
-      field: 'storeroomTitle',
+      headerName: this.appEnum.COMMODITY_PERSIAN_TITLE,
+      field: 'commodityPersianTitle',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,
       filter: true,
     },
     {
-      headerName: this.appEnum.STOREROOM_ID,
-      field: 'storeroomCode',
+      headerName: this.appEnum.COMMODITY_ID,
+      field: 'commodityCode',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,
       filter: true,
     },
   ];
-
-  gridOptions: GridOptions = {
-    rowModelType: 'clientSide',
-    domLayout: 'normal',
-    headerHeight: 40,
-    getRowHeight: (params) => 40,
-  };
 
   gridApi!: any;
 
@@ -118,36 +116,31 @@ export class WarehouseComponent {
     this.gridApi = params.api;
     this.loadData();
   }
+  rowData: CommodityModel[] = [];
+
+  gridOptions: GridOptions = {
+    rowModelType: 'clientSide',
+    domLayout: 'normal',
+    headerHeight: 40,
+    getRowHeight: (params) => 40,
+  };
 
   isBrowser = false;
 
   constructor(
     private router: Router,
-    private storeroomService: StoreroomService,
+    private commodityService: CommodityService,
+    public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
-    private dialog: MatDialog,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit(): void {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-    if (this.isBrowser) {
-      this.loadData();
-    }
-  }
-
   loadData() {
-    this.storeroomService.getStoreroomList().subscribe({
+    this.commodityService.getCommodityList().subscribe({
       next: (data) => {
-        // داخل NgZone اجرا کن تا change detection حتما تریگر بشه
         this.ngZone.run(() => {
-          this.rowData = data.map((item) => ({
-            ...item,
-            createDate: item.createDate
-              ? moment(item.createDate).locale('fa').format('jYYYY/jMM/jDD')
-              : ' ',
-          }));
+          this.rowData = [...data];
           if (this.gridApi) {
             this.gridApi.setRowData(this.rowData);
           }
@@ -157,13 +150,16 @@ export class WarehouseComponent {
       error: (err) => console.error('Error from API:', err),
     });
   }
-  private editRow(params: ICellRendererParams) {
-    console.log(params.data.id);
-    this.router.navigate(['/warehouse/edit', params.data.id]);
+
+  protected addCommodityBank() {
+    this.router.navigate(['/commodity/detail']);
   }
 
-  private deleteRow(params: ICellRendererParams) {
-    console.log(params);
+  protected editRow(params: ICellRendererParams) {
+    this.router.navigate(['/commodity/edit', params.data.id]);
+  }
+
+  protected deleteRow(params: ICellRendererParams) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -177,14 +173,17 @@ export class WarehouseComponent {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (!confirmed) return;
 
-      this.storeroomService.deleteStoreroom(params.data.id).subscribe({
+      this.commodityService.deleteStoreroom(params.data.id).subscribe({
         next: () => this.loadData(),
         error: (err) => console.error('Error deleting record:', err),
       });
     });
   }
 
-  protected addStoreroom(): void {
-    this.router.navigate(['/warehouse/detail']);
+  ngOnInit() {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (this.isBrowser) {
+      this.loadData();
+    }
   }
 }

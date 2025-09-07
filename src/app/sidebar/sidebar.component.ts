@@ -8,36 +8,38 @@ import { AppEnum } from '../enum/app-enum.enum';
   standalone: true,
   imports: [NgIf],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
   public showClickIcon: boolean = false;
-  public productManagement: boolean = false;
+  public commodityManagement: boolean = false;
   public anbarReport: boolean = false;
   public anbarSetting: boolean = false;
   public appEnum = AppEnum;
 
-  constructor(
-    private router: Router
-  ) { }
-  protected productBankAction() {
-    this.router.navigate(['/product'])
+  constructor(private router: Router) {}
+  protected commodityBankAction() {
+    this.router.navigate(['/commodity']);
   }
 
   protected storeroomAction(): void {
-    this.router.navigate(['/warehouse-list'])
+    this.router.navigate(['/warehouse-list']);
   }
 
   protected commodityTypeAction(): void {
-    this.router.navigate(['/commodity-type'])
+    this.router.navigate(['/commodity-type']);
+  }
+
+  protected measurementUnitAction(): void {
+    this.router.navigate(['/measurement-unit']);
   }
 
   public test() {
-    this.showClickIcon = !this.showClickIcon
+    this.showClickIcon = !this.showClickIcon;
   }
 
-  public productManagementAction(): void {
-    this.productManagement = !this.productManagement;
+  public commodityManagementAction(): void {
+    this.commodityManagement = !this.commodityManagement;
   }
 
   public anbarReportAction(): void {

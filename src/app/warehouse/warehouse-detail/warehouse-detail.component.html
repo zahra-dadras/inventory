@@ -9,26 +9,43 @@
             </div>
             <div class="item-style">
                 <label for="storeroomId">{{appEnum.STOREROOM_ID}}</label>
-                <input id="storeroomId" formControlName="storeroomId" placeholder="{{appEnum.STOREROOM_ID}}" />
+                <input id="storeroomId" formControlName="storeroomCode" placeholder="{{appEnum.STOREROOM_ID}}" />
             </div>
 
-            <div class="item-style">
+            <!-- <div class="item-style">
                 <label for="status">{{appEnum.STATUS}}</label>
                 <select id="status" formControlName="status">
                     <option *ngFor="let status of statuses" value="status">{{status}}</option>
                 </select>
-            </div>
+            </div> -->
             <div class="item-style">
                 <label for="storeroomType">{{appEnum.STOREROOM_TYPE}}</label>
-                <select id="storeroomType" formControlName="storeroomType">
-                    <option *ngFor="let storeroomType of storeroomTypes" value="storeroomType">{{storeroomType}}
+                <select id="storeroomType" formControlName="storeroomTypeId">
+                    <option *ngFor="let type of storeroomTypes" [ngValue]="type.id">{{type.storeroomPersianTitle}}
                     </option>
                 </select>
             </div>
             <div class="item-style">
                 <label for="manager">{{appEnum.MANAGER}}</label>
-                <input id="manager" formControlName="manager" placeholder="{{appEnum.MANAGER}}" />
+                <input id="manager" formControlName="storeroomChairman" placeholder="{{appEnum.MANAGER}}" />
             </div>
+            <div>
+                <label for="createDate">{{ appEnum.CREATE_DATE }}</label>
+                <input
+                  id="createDate"
+                  type="text"
+                  formControlName="createDate"
+                  placeholder="{{ appEnum.CREATE_DATE }}"
+                  readonly
+                  (click)="openDatePicker()"
+                />
+              
+                <!-- تقویم شمسی -->
+                <app-persian-datepicker
+                  *ngIf="showDatePicker"
+                  (dateSelected)="onDateSelected($event)">
+                </app-persian-datepicker>
+              </div>
             <div class="text">
                 {{appEnum.STOREROOM_ENVIRONMENTAL_CONDITIONS}}</div>
             <div class="storeroom-environmental-conditions">
@@ -47,22 +64,22 @@
                 </div>
                 <div class="item-style">
                     <label for="maxHumidity">{{appEnum.MAX_HUMIDITY}}</label>
-                    <input id="maxHumidity" formControlName="minHumidity" />
+                    <input id="maxHumidity" formControlName="maxHumidity" />
                 </div>
             </div>
         </form>
         <div class="button">
             <button type="submit" [disabled]="myForm.invalid"
-                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}">{{appEnum.SAVE}}</button>
+                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" (click)="save()">{{appEnum.SAVE}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
         </div>
     </div>
-    <div class="commodity-in-storeroom-list">
+    <div class="commodity-in-storeroom-list" *ngIf="mode === 'edit'">
         <div class="text">
             {{appEnum.COMMODITY_TO_STORE}}
         </div>
-        <ag-grid-angular [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
-            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine">
+        <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
+            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine"  (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
 </div>

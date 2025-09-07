@@ -2,72 +2,63 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AppEnum } from '../../enum/app-enum.enum';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CommodityEditDialogComponent } from '../../commodity/commodity-edit-dialog/commodity-edit-dialog.component';
-import moment from 'moment-jalaali';
 import { CommonModule } from '@angular/common';
-import { CommodityTypeService } from '../../services/commodity-type.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { DialogRef } from '@angular/cdk/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import moment from 'moment-jalaali';
+import { MeasurementUnitService } from '../../services/measurement-unit.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
-// import * as moment from 'moment-jalaali';
 
 @Component({
-  selector: 'app-commodity-type-dialog',
+  selector: 'app-measurement-unit-dialog',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
     PersianDatepickerComponent,
   ],
-  templateUrl: './commodity-type-dialog.component.html',
-  styleUrl: './commodity-type-dialog.component.scss',
+  templateUrl: './measurement-unit-dialog.component.html',
+  styleUrl: './measurement-unit-dialog.component.scss',
 })
-export class CommodityTypeDialogComponent implements OnInit {
+export class MeasurementUnitDialogComponent implements OnInit {
   protected mode: 'create' | 'edit' = 'create';
   protected appEnum = AppEnum;
+  protected isFormValid: boolean = false;
   protected myForm!: FormGroup;
   protected showDatePicker = false;
 
   constructor(
-    public dialogRef: MatDialogRef<CommodityEditDialogComponent>,
+    public dialogRef: MatDialogRef<MeasurementUnitDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private commodityTypeService: CommodityTypeService
+    private measurementUnitService: MeasurementUnitService
   ) {
     this.mode = data.mode;
   }
+
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      commodityTypeCode: [
+      measurementUnitCode: [
         {
           value:
             this.mode === 'edit'
-              ? this.data.record?.data.commodityTypeCode
+              ? this.data.record.data.measurementUnitCode
               : '',
           disabled: true,
         },
         Validators.required,
       ],
-      commodityTypeTitle: [
-        this.mode === 'edit' ? this.data.record?.data.commodityTypeTitle : '',
-        [Validators.required, Validators.minLength(3)],
+      measurementUnitTitle: [
+        this.mode === 'edit' ? this.data.record.data.measurementUnitTitle : '',
+        Validators.required,
       ],
       createDate: [
         this.mode === 'edit'
@@ -78,37 +69,39 @@ export class CommodityTypeDialogComponent implements OnInit {
     });
 
     if (this.mode === 'create') {
-      this.commodityTypeService.getGenerateCodingCommodityType().subscribe({
+      this.measurementUnitService.getGenerateCodeMeasurementUnit().subscribe({
         next: (data) => {
-          this.myForm.controls['commodityTypeCode'].setValue(
-            data.commodity_code
+          this.myForm.controls['measurementUnitCode'].setValue(
+            data.measurement_unit_code
           );
         },
         error: (err) => {
-          console.error('Error from API:', err);
+          console.log(err);
         },
       });
     }
   }
-
   openDatePicker() {
     this.showDatePicker = !this.showDatePicker;
   }
-
   onDateSelected(date: string) {
+    // تاریخ انتخاب‌شده از تقویم میاد (Jalali)
     this.myForm.patchValue({ createDate: date });
-    this.showDatePicker = false;
+    this.showDatePicker = false; // تقویم بسته میشه
   }
-
   onConfirm(): void {
     if (this.myForm.valid) {
       const formData = this.myForm.value;
+      console.log('Form Data to Send:', formData);
       const gregorianDate = moment(formData.createDate, 'jYYYY/jMM/jDD').format(
         'YYYY-MM-DD'
       );
+      console.log('Gregorian to DB:', gregorianDate);
       this.dialogRef.close(this.myForm.controls);
+      this.isFormValid = true;
     } else {
       console.log('Form is not valid');
+      this.isFormValid = false;
     }
   }
 

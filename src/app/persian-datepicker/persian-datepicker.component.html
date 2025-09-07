@@ -1,0 +1,12 @@
+<div class="datepicker-container">
+    <div class="header">{{ currentMonth }}</div>
+    <div class="days">
+      <button 
+        *ngFor="let d of days" 
+        (click)="selectDate(d)"
+        [class.selected]="d === selectedDate">
+        {{ d.split('/')[2] }} <!-- فقط روز نشون داده میشه -->
+      </button>
+    </div>
+  </div>
+  

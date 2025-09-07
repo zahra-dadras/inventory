@@ -13,14 +13,14 @@
 
         </li>
         <li class="anbar-setting">
-            <div class="test hover" (click)="productManagementAction()">
-                <i class="fa fa-angle-right pull-left" *ngIf="!productManagement"></i>
-                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="productManagement"></i>
+            <div class="test hover" (click)="commodityManagementAction()">
+                <i class="fa fa-angle-right pull-left" *ngIf="!commodityManagement"></i>
+                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="commodityManagement"></i>
                 <p class="anbar-text">{{appEnum.COMMODITY_BANK}}</p>
             </div>
 
-            <ul *ngIf="productManagement">
-                <li class="hover" (click)="productBankAction()">{{appEnum.COMMODITY_CREATE_AND_EDIT_FORM}}</li>
+            <ul *ngIf="commodityManagement">
+                <li class="hover" (click)="commodityBankAction()">{{appEnum.COMMODITY_CREATE_AND_EDIT_FORM}}</li>
             </ul>
 
         </li>
@@ -45,6 +45,7 @@
 
             <ul *ngIf="anbarSetting">
                 <li class="hover" (click)="commodityTypeAction()">{{ appEnum.COMMODITY_TYPE }}</li>
+                <li class="hover" (click)="measurementUnitAction()">{{ appEnum.MEASUREMENT_UNIT}}</li>
             </ul>
 
         </li>

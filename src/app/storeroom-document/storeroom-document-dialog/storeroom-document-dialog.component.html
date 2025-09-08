@@ -1,0 +1,42 @@
+<div class="content">
+    <div class="text">{{appEnum.COMMODITY_TO_STORE}}</div>
+    <form [formGroup]="myForm" class="form-container">
+
+        <div>
+            <label for="commodityTitle">{{appEnum.Commodity_TITLE}}</label>
+            <select id="commodityTitle" formControlName="commodityId">
+                <option *ngFor="let commodity of commodityList " [ngValue]="commodity.id">
+                    {{commodity.commodityPersianTitle}}</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="commodityCode">{{appEnum.COMMODITY_CODE}}</label>
+            <input id="commodityCode" formControlName="commodityCode" placeholder="{{appEnum.COMMODITY_CODE}}" />
+        </div>
+
+        <!-- <div>
+            <label for="measurementUnit">{{appEnum.MEASUREMENT_UNIT}}</label>
+            <select id="measurementUnit" formControlName="measurementUnitId">
+                <option *ngFor="let measurementUnit of measurementUnitList " [ngValue]="measurementUnit.id">
+                    {{measurementUnit.measurementUnitTitle}}</option>
+            </select>
+        </div> -->
+
+        <div>
+            <label for="measurementUnit">{{appEnum.MEASUREMENT_UNIT}}</label>
+            <input id="measurementUnit" formControlName="measurementUnitId" placeholder="{{appEnum.MEASUREMENT_UNIT}}" />
+        </div>
+        <div>
+            <label for="value">{{appEnum.VALUE}}</label>
+            <input id="value" formControlName="value" placeholder="{{appEnum.VALUE}}" />
+        </div>
+
+    </form>
+    <div class="button">
+        <button type="submit" [disabled]="myForm.invalid"
+            [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" class="active-button"
+            (click)="onConfirm()">{{appEnum.SAVE_COMMODITY}}</button>
+        <button type="submit" class="close" (click)="onCancel()">{{appEnum.CLOSE}}</button>
+    </div>
+</div>

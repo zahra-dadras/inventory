@@ -26,6 +26,9 @@ export class SidebarComponent {
     this.router.navigate(['/warehouse-list']);
   }
 
+  protected storeroomDocumentAction(): void {
+    this.router.navigate(['/storeroom-document']);
+  }
   protected commodityTypeAction(): void {
     this.router.navigate(['/commodity-type']);
   }

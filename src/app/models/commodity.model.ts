@@ -6,5 +6,6 @@ export interface CommodityModel {
   createDate: string | Date;
   commodityTypeId: number | null;
   measurementUnitId: number | null;
+  measurementUnitTitle?: string;
   description: string | null;
 }

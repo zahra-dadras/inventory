@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { InventoryModel } from '../models/inventory.model';
 
 interface commodityStoreroomModel {
   id: number;
@@ -48,39 +49,21 @@ export class CommodityStoreroomService {
     >(`${this.apiUrl}/${commodityId}`);
   }
 
-  getCommodityStoreroomByStoreroomId(storeroomId: number): Observable<
-    {
-      id: number;
-      commodityId: number;
-      storeroomId: number;
-    }[]
-  > {
+  getCommodityStoreroomByStoreroomId(
+    storeroomId: number
+  ): Observable<InventoryModel[]> {
     console.log(storeroomId);
-    return this.http.get<
-      {
-        id: number;
-        commodityId: number;
-        storeroomId: number;
-      }[]
-    >(`${this.apiUrl}/commodity-list-by-storeroom-id/${storeroomId}`);
+    return this.http.get<InventoryModel[]>(
+      `${this.apiUrl}/commodity-list-by-storeroom-id/${storeroomId}`
+    );
   }
 
-  createCommodityStoreroom(
-    commodityId: number,
-    storeroomId: number
-  ): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { commodityId, storeroomId });
+  createCommodityStoreroom(value: InventoryModel): Observable<any> {
+    return this.http.post<any>(this.apiUrl, value);
   }
 
-  updateCommodityStoreroom(
-    id: number,
-    commodityId: number,
-    storeroomId: number
-  ): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${commodityId}`, {
-      commodityId,
-      storeroomId,
-    });
+  updateCommodityStoreroom(id: number, value: InventoryModel): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${value.commodityId}`, value);
   }
 
   deleteCommodityStoreroom(id: number): Observable<any> {

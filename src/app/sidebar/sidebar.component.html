@@ -32,7 +32,7 @@
             </div>
 
             <ul *ngIf="anbarReport">
-                <li class="hover">{{appEnum.STOREROOM_DOCUMENT_CREATE_AND_EDIT_FORM}}</li>
+                <li class="hover" (click)="storeroomDocumentAction()">{{appEnum.STOREROOM_DOCUMENT_CREATE_AND_EDIT_FORM}}</li>
             </ul>
 
         </li>

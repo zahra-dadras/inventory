@@ -76,33 +76,33 @@ export class CommodityEditDialogComponent {
 
   onConfirm(): void {
     console.log(this.data);
-    if (this.data.mode === 'create') {
-      this.commodityStoreroomService
-        .createCommodityStoreroom(
-          this.data.commodityId,
-          this.myForm.controls['storeroomId'].value
-        )
-        .subscribe({
-          next: (res) => {
-            this.dialogRef.close(this.data.id);
-          },
-          error: (err) => {},
-        });
-    } else {
-      console.log(this.data.rowData);
-      this.commodityStoreroomService
-        .updateCommodityStoreroom(
-          this.data.rowData.id,
-          this.data.commodityId,
-          this.myForm.controls['storeroomId'].value
-        )
-        .subscribe({
-          next: (res) => {
-            this.dialogRef.close(this.data.commodityId);
-          },
-          error: (err) => {},
-        });
-    }
+    // if (this.data.mode === 'create') {
+    //   this.commodityStoreroomService
+    //     .createCommodityStoreroom(
+    //       this.data.commodityId,
+    //       this.myForm.controls['storeroomId'].value
+    //     )
+    //     .subscribe({
+    //       next: (res) => {
+    //         this.dialogRef.close(this.data.id);
+    //       },
+    //       error: (err) => {},
+    //     });
+    // } else {
+    //   console.log(this.data.rowData);
+    //   this.commodityStoreroomService
+    //     .updateCommodityStoreroom(
+    //       this.data.rowData.id,
+    //       this.data.commodityId,
+    //       this.myForm.controls['storeroomId'].value
+    //     )
+    //     .subscribe({
+    //       next: (res) => {
+    //         this.dialogRef.close(this.data.commodityId);
+    //       },
+    //       error: (err) => {},
+    //     });
+    // }
   }
 
   onCancel(): void {

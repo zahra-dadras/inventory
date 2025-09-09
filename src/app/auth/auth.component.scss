@@ -1,0 +1,75 @@
+.auth-container {
+  max-width: 400px;
+  margin: 100px auto;
+  background: #f8faff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 50, 0.15);
+  font-family: "Tahoma", sans-serif;
+  direction: rtl;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #d6e4ff;
+  color: #0d1a66;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tabs button.active {
+  background: #0d1a66;
+  color: white;
+  border-radius: 8px;
+}
+
+.form-container {
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #0d1a66;
+}
+
+input {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #0d1a66;
+  box-shadow: 0 0 5px rgba(13, 26, 102, 0.3);
+}
+
+button[type="submit"] {
+  background: #0d1a66;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #1e2e99;
+}

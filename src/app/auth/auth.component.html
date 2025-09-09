@@ -1,0 +1,29 @@
+<div class="auth-container">
+    <div class="tabs">
+      <button [class.active]="activeTab === 'login'" (click)="switchTab('login')">ورود</button>
+      <button [class.active]="activeTab === 'register'" (click)="switchTab('register')">ثبت‌نام</button>
+    </div>
+  
+    <!-- Login Form -->
+    <div class="form-container" *ngIf="activeTab === 'login'">
+      <h2>ورود</h2>
+      <form (ngSubmit)="login()">
+        <input type="email" [(ngModel)]="email" name="email" placeholder="ایمیل" required />
+        <input type="password" [(ngModel)]="password" name="password" placeholder="رمز عبور" required />
+        <button type="submit">ورود</button>
+      </form>
+    </div>
+  
+    <!-- Register Form -->
+    <div class="form-container" *ngIf="activeTab === 'register'">
+      <h2>ثبت‌نام</h2>
+      <form (ngSubmit)="register()">
+        <input type="text" [(ngModel)]="username" name="username" placeholder="نام کاربری" required />
+        <input type="email" [(ngModel)]="email" name="email" placeholder="ایمیل" required />
+        <input type="password" [(ngModel)]="password" name="password" placeholder="رمز عبور" required />
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="تکرار رمز عبور" required />
+        <button type="submit">ثبت‌نام</button>
+      </form>
+    </div>
+  </div>
+  

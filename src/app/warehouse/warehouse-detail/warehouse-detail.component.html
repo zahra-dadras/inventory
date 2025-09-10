@@ -29,7 +29,7 @@
                 <label for="manager">{{appEnum.MANAGER}}</label>
                 <input id="manager" formControlName="storeroomChairman" placeholder="{{appEnum.MANAGER}}" />
             </div>
-            <div>
+            <div class="item-style">
                 <label for="createDate">{{ appEnum.CREATE_DATE }}</label>
                 <input
                   id="createDate"
@@ -68,13 +68,13 @@
                 </div>
             </div>
         </form>
-        <div class="button">
+        <div class="buttonForm">
             <button type="submit" [disabled]="myForm.invalid"
                 [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" (click)="save()">{{appEnum.SAVE}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
         </div>
     </div>
-    <div class="commodity-in-storeroom-list" *ngIf="mode === 'edit'">
+    <div class="ag-grid-container" *ngIf="mode === 'edit'">
         <div class="text">
             {{appEnum.COMMODITY_TO_STORE}}
         </div>

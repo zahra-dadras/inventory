@@ -6,7 +6,7 @@
       <span>{{appEnum.COMMODITY_TO_STORE}}</span>
     </div>
     <div class="text" *ngIf="rowData.length > 0 ">
-      <span>{{appEnum.COMMODITY_TO_STORE}}</span>
+     {{appEnum.COMMODITY_TO_STORE}}
     </div>
     <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
       [defaultColDef]="defaultColDef" [pagination]="true"

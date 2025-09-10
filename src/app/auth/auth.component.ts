@@ -36,7 +36,7 @@ export class AuthComponent {
         next: (res: any) => {
           this.authService.saveToken(res.token);
           alert('ورود موفقیت‌آمیز بود');
-          this.router.navigate(['/warehouse-list']);
+          this.router.navigate(['/home-page']);
         },
         error: (err) => alert('خطا در ورود: ' + err.error.message),
       });

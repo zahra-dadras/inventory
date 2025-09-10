@@ -15,14 +15,18 @@
     font-weight: bold;
     height: 20px;
     width: 95%;
+    color: #0d1a66;
 }
   
   .form {
     width: 90%;
     height: 65%;
-    background-color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #f8faff;
     border-radius: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 12px rgba(0, 0, 50, 0.15);
   }
   
   .form-container {
@@ -40,220 +44,116 @@
     flex-direction: column;
   }
   
-  input {
-    padding: 8px;
-    border: 1px solid #ccc;
+  input, select {
+    padding: 10px;
+    border: 1px solid #b0c4ff;
     border-radius: 8px;
+    background-color: #ffffff;
+    transition: 0.3s;
+    font-size: 14px;
   }
   
-  @media (max-width: 768px) {
-    input {
-      width: calc(50% - 10px);
-    }
-  }
-  
-  @media (max-width: 480px) {
-    input {
-      width: 100%;
-    }
-  }
-  
-  .dropdown-container {
-    width: 250px;
-    margin: 20px auto;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  label {
-    display: block;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  select {
-  
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    /* ایجاد افکت برای تغییرات */
-  }
-  
-  select:focus {
-    border-color: #4caf50;
-    background-color: #eaf7e3;
+  input:focus, select:focus {
+    border-color: #0d1a66;
+    box-shadow: 0 0 5px rgba(13, 26, 102, 0.2);
     outline: none;
   }
   
-  option {
-    padding: 10px;
-    background-color: white;
-    color: #333;
-  }
-  
-  option:hover {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  select:hover {
-    border-color: #4caf50;
-    background-color: #f1f1f1;
-  }
-  
-  .storeroom-environmental-conditions {
-    width: 100% !important;
-    font-family: 'Arial', sans-serif;
-    border: 1px solid black;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding: 10px;
-  }
-  
-  .button {
-    padding: 10px;
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
   }
   
   .active-button {
-  
-    padding: 5px 10px;
-    margin: 2px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 4px;
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .close {
-    padding: 5px 10px;
-    margin: 2px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 4px;
-    background-color: #f1f1f1;
-    color: black;
+    background-color: #0d1a66;
+    color: #ffffff;
   }
   
   .inactive-button {
-    padding: 5px 10px;
-    margin: 2px;
-    border: none;
-    font-size: 14px;
-    border-radius: 4px;
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
   }
   
-  .commodity-in-storeroom-list {
-    width: 98%;
-    height: calc(100% - 35px);
-    background-color: #e0e0e0;
-    border: 2px #e0e0e0 solid;
-    border-radius: 10px;
+  .close {
+    background-color: #f1f1f1;
+    color: #0d1a66;
   }
+  
+  .storeroom-environmental-conditions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #b0c4ff;
+    background-color: #f8faff;
+  }
+  .buttonForm{
+    padding-bottom: 10px;
+    padding-left: 15px;
+  }
+
+  .ag-grid-container {
+    width: 95%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
   
   ::ng-deep {
     .ag-theme-alpine {
-        height: 100%;
-        width: 100%;
-        width: 100%;
-        // height: calc(100% - 35px);
-        overflow-y: auto;
+      width: 100%;
+      height: 100%;
+      font-family: 'Tahoma', sans-serif;
+      background-color: #f8faff;
     }
   
-    .ag-cell-label-container {
-      direction: rtl;
+     .ag-header-cell {
+      background-color: #c6d6ff;
+      color: #0d1a66;
+      font-weight: bold;
+      border-bottom: 2px solid #b0c4ff;
     }
-  
-    .edit-btn,
-    .delete-btn {
-      padding: 5px 10px;
-      margin: 2px;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      border-radius: 4px;
-    }
-  
-    .edit-btn {
-      background-color: #4CAF50;
-      color: white;
-    }
-  
-    .edit-btn:hover {
-      background-color: #45a049;
-    }
-  
-    .delete-btn {
-      background-color: #f44336;
-      color: white;
-    }
-  
-    .delete-btn:hover {
-      background-color: #e53935;
-    }
-  
-  
-    .ag-cell {
-      box-sizing: border-box;
+    
+     .ag-cell {
+      background-color: #ffffff;
+      // border: 1px solid #d0d4e0;
+      // border-radius: 6px;
       padding: 10px;
-      font-size: 14px;
-      font-family: 'Arial', sans-serif;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      background-color: #f9f9f9;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: 0.3s;
     }
-  
-    .ag-cell:hover {
-      background-color: #e0e0e0;
+    
+     .ag-cell:hover {
+      background-color: #e6ebff;
       transform: scale(1.02);
     }
-  
-    .ag-cell.ag-cell-range-selection {
-      background-color: #c6e7ff;
-      color: #003366;
-      font-weight: bold;
+    
+     .edit-btn {
+      background-color: #5a7dff;
+      color: #fff;
     }
-  
-    .ag-header-cell {
-      box-sizing: border-box;
-      font-size: 16px;
-      font-weight: bold;
-      color: #333;
-      background-color: #f0f0f0;
-      border-bottom: 2px solid #ddd;
+    
+     .delete-btn {
+      background-color: #ff6b6b;
+      color: #fff;
     }
-  
-    .ag-cell-label-container {
-      padding: 0;
+      
+  }
+  @media (max-width: 768px) {
+    .item-style {
+      flex: 1 1 calc(50% - 10px);
     }
+  }
   
-    .ag-header-cell:hover {
-      background-color: #e0e0e0;
-    }
-  
-    .ag-row,
-    .ag-cell {
-      border: 1px solid #f1f1f1;
-    }
-  
-    .ag-row:hover {
-      background-color: #f1f1f1;
-    }
-  
-    .ag-ltr .ag-cell {
-      padding: 5px 10px;
+  @media (max-width: 480px) {
+    .item-style {
+      flex: 1 1 100%;
     }
   }

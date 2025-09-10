@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { AuthService } from './services/auth.service';
@@ -14,5 +14,10 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'inventory';
-  constructor(protected authService: AuthService) {}
+  constructor(protected authService: AuthService, private router: Router) {}
+
+  shouldShowSidebar(): boolean {
+    const currentUrl = this.router.url;
+    return this.authService.isLoggedIn() && currentUrl !== '/home-page';
+  }
 }

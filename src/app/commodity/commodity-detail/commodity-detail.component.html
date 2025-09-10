@@ -3,39 +3,39 @@
         <div  class="text">{{appEnum.CREATE_AND_EDIT_COMMODITY}}</div>
         <form [formGroup]="myForm" class="form-container" >
 
-            <div>
+            <div class="item-style">
                 <label for="CommodityCode">{{appEnum.Commodity_COD}}</label>
                 <input id="CommodityCode" formControlName="commodityCode" placeholder="{{appEnum.Commodity_COD}}" />
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="CommodityPersianTitle">{{appEnum.Commodity_PERSIAN_TITLE}}</label>
                 <input id="CommodityPersianTitle" formControlName="commodityPersianTitle"
                     placeholder="{{appEnum.Commodity_PERSIAN_TITLE}}" />
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="CommodityEnglishTitle">{{appEnum.Commodity_ENGLISH_TITLE}}</label>
                 <input id="CommodityEnglishTitle" formControlName="commodityEnglishTitle"
                     placeholder="{{appEnum.Commodity_ENGLISH_TITLE}}" />
             </div>
 
 
-            <div>
+            <div class="item-style">
                 <label for="category">{{appEnum.NATURE_OF_THE_GOODS}}</label>
                 <select id="category" formControlName="commodityTypeId">
                     <option *ngFor="let commodityType of commodityTypeList" [ngValue]="commodityType.id">{{ commodityType.commodityTypeTitle }}</option>
                 </select>
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="unitMeasurement">{{appEnum.UNIT_OF_MEASUREMENT}}</label>
                 <select id="unitMeasurement" formControlName="measurementUnitId">
                     <option *ngFor="let measurementUnit of measurementUnitList " [ngValue]="measurementUnit.id">{{measurementUnit.measurementUnitTitle}}</option>
                 </select>
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="createDate">{{ appEnum.CREATE_DATE }}</label>
                 <input
                   id="createDate"
@@ -59,7 +59,7 @@
                     placeholder="لطفاً توضیحات خود را وارد کنید..."></textarea>
             </div>
         </form>
-        <div class="button">
+        <div class="buttonForm">
             <button type="submit" [disabled]="myForm.invalid"
                 [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" (click)="onSubmit()">{{appEnum.SAVE_COMMODITY}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>

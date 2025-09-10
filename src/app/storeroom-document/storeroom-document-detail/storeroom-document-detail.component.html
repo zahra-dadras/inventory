@@ -3,11 +3,11 @@
         <div  class="text">{{appEnum.CREATE_AND_EDIT_COMMODITY}}</div>
         <form [formGroup]="myForm" class="form-container" >
 
-            <div>
+            <div class="item-style">
                 <label for="documentCode">{{appEnum.STOREROOM_DOCUMENT_CODE}}</label>
                 <input id="documentCode" formControlName="documentCode" placeholder="{{appEnum.STOREROOM_DOCUMENT_CODE}}" />
             </div>
-            <div>
+            <div class="item-style">
                 <label for="documentDate">{{ appEnum.STOREROOM_DOCUMENT_DATE }}</label>
                 <input
                   id="documentDate"
@@ -24,46 +24,46 @@
                   (dateSelected)="onDateSelected($event)">
                 </app-persian-datepicker>
               </div>
-            <div>
+            <div class="item-style">
                 <label for="documentTitle">{{appEnum.STOREROOM_DOCUMENT_TITLE}}</label>
                 <input id="documentTitle" formControlName="documentTitle"
                     placeholder="{{appEnum.STOREROOM_DOCUMENT_TITLE}}" />
             </div>
 
 
-            <div>
+            <div class="item-style">
                 <label for="documentType">{{appEnum.STOREROOM_DOCUMENT_TYPE}}</label>
                 <select id="documentType" formControlName="documentType">
                     <option *ngFor="let documentType of documentTypeList" [ngValue]="documentType.value">{{ documentType.value }}</option>
                 </select>
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="documentGroup">{{appEnum.STOREROOM_DOCUMENT_TYPE}}</label>
                 <select id="documentGroup" formControlName="documentGroup">
                     <option *ngFor="let documentGroup of documentGroupList" [ngValue]="documentGroup.value">{{ documentGroup.value }}</option>
                 </select>
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="storeroomId">{{appEnum.UNIT_OF_MEASUREMENT}}</label>
                 <select id="storeroomId" formControlName="storeroomId">
                     <option *ngFor="let storeroom of storeroomList " [ngValue]="storeroom.id">{{storeroom.storeroomTypePersianTitle}}</option>
                 </select>
             </div>
 
-            <div>
+            <div class="item-style">
                 <label for="reciever">{{appEnum.RECIEVER}}</label>
                 <input id="reciever" formControlName="reciever"
                     placeholder="{{appEnum.RECIEVER}}" />
             </div>
-            <div>
+            <div class="item-style">
                 <label for="deliverer">{{appEnum.DELIVERER}}</label>
                 <input id="deliverer" formControlName="deliverer"
                     placeholder="{{appEnum.DELIVERER}}" />
             </div>
         </form>
-        <div class="button">
+        <div class="buttonForm">
             <button type="submit" [disabled]="myForm.invalid"
                 [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" (click)="onSubmit()">{{appEnum.SAVE_COMMODITY}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>

@@ -12,7 +12,7 @@ import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: 'auth', component: AuthComponent, canActivate: [authGuard] },
+  { path: 'auth', component: AuthComponent },
   {
     path: 'warehouse-list',
     component: WarehouseComponent,

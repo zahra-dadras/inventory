@@ -42,7 +42,30 @@ export class AuthService {
     }
   }
 
+  // 🟢 decode کردن توکن JWT
+  private decodeToken(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // 🟢 بررسی وضعیت لاگین
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+
+    const decoded = this.decodeToken(token);
+    if (!decoded || !decoded.exp) return false;
+
+    const now = Math.floor(Date.now() / 1000);
+    if (decoded.exp < now) {
+      this.logout(); // اگر منقضی شده باشه، لاگ‌اوت کن
+      return false;
+    }
+
+    return true;
   }
 }

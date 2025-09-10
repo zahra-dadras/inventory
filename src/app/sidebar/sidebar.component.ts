@@ -1,55 +1,52 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppEnum } from '../enum/app-enum.enum';
+import { CommonModule } from '@angular/common';
+import {
+  LucideAngularModule,
+  Warehouse,
+  Home,
+  Package,
+  FileText,
+  BarChart,
+  Settings,
+  Layers,
+  Ruler,
+  ChevronDown,
+  ChevronUp,
+  LogOut,
+} from 'lucide-angular';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NgIf],
+  imports: [CommonModule, RouterModule, LucideAngularModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss',
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  public showClickIcon: boolean = false;
-  public commodityManagement: boolean = false;
-  public anbarReport: boolean = false;
-  public anbarSetting: boolean = false;
-  public appEnum = AppEnum;
+  readonly Home = Home;
+  readonly Package = Package;
+  readonly FileText = FileText;
+  readonly BarChart = BarChart;
+  readonly Settings = Settings;
+  readonly Layers = Layers;
+  readonly Ruler = Ruler;
+  readonly ChevronDown = ChevronDown;
+  readonly ChevronUp = ChevronUp;
+  readonly LogOut = LogOut;
+  readonly Warehouse = Warehouse;
 
-  constructor(private router: Router) {}
-  protected commodityBankAction() {
-    this.router.navigate(['/commodity']);
+  showSettings = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  toggleSettings() {
+    this.showSettings = !this.showSettings;
   }
 
-  protected storeroomAction(): void {
-    this.router.navigate(['/warehouse-list']);
-  }
-
-  protected storeroomDocumentAction(): void {
-    this.router.navigate(['/storeroom-document']);
-  }
-  protected commodityTypeAction(): void {
-    this.router.navigate(['/commodity-type']);
-  }
-
-  protected measurementUnitAction(): void {
-    this.router.navigate(['/measurement-unit']);
-  }
-
-  public test() {
-    this.showClickIcon = !this.showClickIcon;
-  }
-
-  public commodityManagementAction(): void {
-    this.commodityManagement = !this.commodityManagement;
-  }
-
-  public anbarReportAction(): void {
-    this.anbarReport = !this.anbarReport;
-  }
-
-  public anbarSettingAction(): void {
-    this.anbarSetting = !this.anbarSetting;
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/auth']);
   }
 }

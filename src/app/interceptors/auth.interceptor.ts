@@ -14,14 +14,12 @@ export const authInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<any>> => {
   const authService = inject(AuthService);
 
-  if (typeof window !== 'undefined') {
-    const token = authService.getToken();
-    if (token) {
-      const cloned = req.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
-      });
-      return next(cloned);
-    }
+  const token = authService.getToken();
+  if (token) {
+    const cloned = req.clone({
+      setHeaders: { Authorization: `Bearer ${token}` },
+    });
+    return next(cloned);
   }
 
   return next(req);

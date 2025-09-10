@@ -2,7 +2,7 @@
   <div class="data">
     <router-outlet></router-outlet>
   </div>
-  <div class="sidbar">
+  <div class="sidbar" *ngIf="authService.isLoggedIn()">
     <app-sidebar></app-sidebar>
   </div>
 </div>

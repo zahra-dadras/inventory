@@ -1,53 +1,55 @@
-<div class="menu-content">
+<nav class="sidebar">
     <ul>
-        <li class="anbar-setting">
-            <div class="test hover" (click)="test()">
-                <i class="fa fa-angle-right pull-left" *ngIf="!showClickIcon"></i>
-                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="showClickIcon"></i>
-                <p class="anbar-text">{{appEnum.STOREROOMS_LIST}}</p>
-            </div>
+      <li routerLink="/warehouse-list" routerLinkActive="active">
+        <lucide-icon [img]="Home" size="20"></lucide-icon>
+        فهرست انبار
+      </li>
+  
+      <li routerLink="/commodity" routerLinkActive="active">
+        <lucide-icon [img]="Package" size="20"></lucide-icon>
+        فهرست کالا
+      </li>
+  
+      <li routerLink="/storeroom-document" routerLinkActive="active">
+        <lucide-icon [img]="FileText" size="20"></lucide-icon>
+        سند انبار
+      </li>
+  
+      <li routerLink="/reports" routerLinkActive="active">
+        <lucide-icon [img]="BarChart" size="20"></lucide-icon>
+        گزارش‌گیری
+      </li>
+  
+      <!-- تنظیمات انبار -->
+      <li (click)="toggleSettings()" class="dropdown-toggle">
+        <div class="anbarSettingStyle">
+            <lucide-icon
+              [img]="showSettings ? ChevronUp : ChevronDown"
+              size="18"
+            ></lucide-icon>
+            <lucide-icon [img]="Settings" size="20"></lucide-icon>
+            تنظیمات انبار
+        </div>
+    
 
-            <ul *ngIf="showClickIcon">
-                <li class="hover" (click)="storeroomAction()">{{ appEnum.STOREROOM_CREATE_AND_EDIT_FORM }}</li>
-            </ul>
-
-        </li>
-        <li class="anbar-setting">
-            <div class="test hover" (click)="commodityManagementAction()">
-                <i class="fa fa-angle-right pull-left" *ngIf="!commodityManagement"></i>
-                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="commodityManagement"></i>
-                <p class="anbar-text">{{appEnum.COMMODITY_BANK}}</p>
-            </div>
-
-            <ul *ngIf="commodityManagement">
-                <li class="hover" (click)="commodityBankAction()">{{appEnum.COMMODITY_CREATE_AND_EDIT_FORM}}</li>
-            </ul>
-
-        </li>
-        <li class="anbar-setting">
-            <div class="test hover" (click)="anbarReportAction()">
-                <i class="fa fa-angle-right pull-left" *ngIf="!anbarReport"></i>
-                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="anbarReport"></i>
-                <p class="anbar-text">{{appEnum.STOREROOM_DOCUMENT_LIST}}</p>
-            </div>
-
-            <ul *ngIf="anbarReport">
-                <li class="hover" (click)="storeroomDocumentAction()">{{appEnum.STOREROOM_DOCUMENT_CREATE_AND_EDIT_FORM}}</li>
-            </ul>
-
-        </li>
-        <li class="anbar-setting">
-            <div class="test hover" (click)="anbarSettingAction()">
-                <i class="fa fa-angle-right pull-left" *ngIf="!anbarSetting"></i>
-                <i class="fa-sharp fa-solid fa-angle-up" *ngIf="anbarSetting"></i>
-                <p class="anbar-text">{{appEnum.STOREROOM_SETTING}}</p>
-            </div>
-
-            <ul *ngIf="anbarSetting">
-                <li class="hover" (click)="commodityTypeAction()">{{ appEnum.COMMODITY_TYPE }}</li>
-                <li class="hover" (click)="measurementUnitAction()">{{ appEnum.MEASUREMENT_UNIT}}</li>
-            </ul>
-
-        </li>
+        <ul class="dropdown" *ngIf="showSettings">
+            <li routerLink="/commodity-type" routerLinkActive="active">
+              <lucide-icon [img]="Layers" size="18"></lucide-icon>
+              ماهیت کالا
+            </li>
+            <li routerLink="/measurement-unit" routerLinkActive="active">
+              <lucide-icon [img]="Ruler" size="18"></lucide-icon>
+              واحد سنجش
+            </li>
+          </ul>
+      </li>
+   
     </ul>
-</div>
+  
+    <!-- دکمه خروج -->
+    <div class="logout-btn" (click)="logout()">
+      <lucide-icon [img]="LogOut" size="20"></lucide-icon>
+      خروج
+    </div>
+  </nav>
+  

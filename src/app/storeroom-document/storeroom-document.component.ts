@@ -19,6 +19,7 @@ import { StoreroomDocumentService } from '../services/storeroom-document.service
 import { MatDialog } from '@angular/material/dialog';
 import { StoreroomDocumentModel } from '../models/storeroom-document.model';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-storeroom-document',
@@ -145,6 +146,7 @@ export class StoreroomDocumentComponent implements OnInit {
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
+    private toastrService: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -159,7 +161,7 @@ export class StoreroomDocumentComponent implements OnInit {
           this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
         });
       },
-      error: (err) => console.error('Error from API:', err),
+      error: (err) => this.toastrService.error(err.error),
     });
   }
 
@@ -188,8 +190,11 @@ export class StoreroomDocumentComponent implements OnInit {
       this.storeroomDocumentService
         .deleteStoreroomDocument(params.data.id)
         .subscribe({
-          next: () => this.loadData(),
-          error: (err) => console.error('Error deleting record:', err),
+          next: () => {
+            this.loadData();
+            this.toastrService.success('سند انبار با موفقیت حذف شد');
+          },
+          error: (err) => this.toastrService.error(err.error),
         });
     });
   }

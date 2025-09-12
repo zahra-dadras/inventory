@@ -71,8 +71,6 @@
     </div>
 
     <div class="anbarToCommodity" *ngIf="mode === 'edit'">
-        <!-- <app-commodity-list [storeroomDialogData]="childData"
-            (editStoreroom)="storeroomDialog($event)"></app-commodity-list> -->
             <div class="ag-grid-container">
                 <div class="buttons" >
                   <button class="add-button"  type="button" aria-label="Add" (click)="addCommodityBank()">
@@ -80,9 +78,6 @@
                   </button>
                   <span>{{appEnum.COMMODITY_TO_STORE}}</span>
                 </div>
-                <!-- <div class="text2" *ngIf="rowData.length > 0 ">
-                  <span>{{appEnum.COMMODITY_TO_STORE}}</span>
-                </div> -->
                 <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
                   [defaultColDef]="defaultColDef" [pagination]="true"
                  domLayout="autoHeight" class="ag-theme-alpine">

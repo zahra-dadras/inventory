@@ -19,6 +19,7 @@ import { CommodityModel } from '../models/commodity.model';
 import moment from 'moment-jalaali';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-commodity',
@@ -133,6 +134,7 @@ export class CommodityComponent implements OnInit {
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
+    private toastService: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -147,7 +149,7 @@ export class CommodityComponent implements OnInit {
           this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
         });
       },
-      error: (err) => console.error('Error from API:', err),
+      error: (err) => this.toastService.error(err.error.message),
     });
   }
 
@@ -174,8 +176,11 @@ export class CommodityComponent implements OnInit {
       if (!confirmed) return;
 
       this.commodityService.deleteStoreroom(params.data.id).subscribe({
-        next: () => this.loadData(),
-        error: (err) => console.error('Error deleting record:', err),
+        next: () => {
+          this.loadData();
+          this.toastService.success('با موفقیت حذف شد');
+        },
+        error: (err) => this.toastService.error(err.error),
       });
     });
   }

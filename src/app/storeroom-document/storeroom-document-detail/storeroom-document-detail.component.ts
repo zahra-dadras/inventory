@@ -34,6 +34,7 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
 import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
 import { StoreroomDocumentDialogComponent } from '../storeroom-document-dialog/storeroom-document-dialog.component';
 import { InventoryModel } from '../../models/inventory.model';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-storeroom-document-detail',
@@ -157,7 +158,8 @@ export class StoreroomDocumentDetailComponent {
     private location: Location,
     private storeroomDocumentService: StoreroomDocumentService,
     private commodityStoreroomService: CommodityStoreroomService,
-    private storeroomService: StoreroomService
+    private storeroomService: StoreroomService,
+    private toastrService: ToastService
   ) {
     this.myForm = new FormGroup({
       documentCode: new FormControl(
@@ -180,7 +182,9 @@ export class StoreroomDocumentDetailComponent {
       next: (res) => {
         this.storeroomList = res;
       },
-      error: (err) => {},
+      error: (err) => {
+        this.toastrService.error(err.error);
+      },
     });
 
     if (this.route.snapshot.paramMap.has('id')) {
@@ -210,7 +214,9 @@ export class StoreroomDocumentDetailComponent {
               }
             }
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     } else {
       this.mode = 'create';
@@ -221,14 +227,15 @@ export class StoreroomDocumentDetailComponent {
             res.storeroomDocumentCode
           );
         },
-        error: (err) => {},
+        error: (err) => {
+          this.toastrService.error(err.error);
+        },
       });
     }
   }
 
   onSubmit() {
     let form = this.myForm.controls;
-    console.log(form);
     const payload = {
       documentDate: form['documentDate'].value,
       documentTitle: form['documentTitle'].value,
@@ -246,22 +253,26 @@ export class StoreroomDocumentDetailComponent {
         })
         .subscribe({
           next: (res) => {
-            console.log('reeeeeeeeeeees', res);
             this.mode = 'edit';
             this.myForm.controls['id'].patchValue(res);
             this.loadData(this.myForm.controls['storeroomId'].value);
+            this.toastrService.success('سند انبار با موفقیت ایجاد شد');
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     } else {
       this.storeroomDocumentService
         .updateStoreroomDocument(this.myForm.controls['id'].value, payload)
         .subscribe({
           next: (res) => {
-            console.log(res);
             this.loadData(this.myForm.controls['storeroomId'].value);
+            this.toastrService.success('سند انبار با موفقیت ویرایش شد');
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     }
   }
@@ -276,27 +287,7 @@ export class StoreroomDocumentDetailComponent {
     this.showDatePicker = false;
   }
 
-  storeroomDialog(value: any) {
-    // console.log(value);
-    // const data = {
-    //   rowData: value,
-    //   commodityId: this.myForm.controls['id'].value,
-    //   mode: value ? 'edit' : 'create',
-    // };
-    // const dialogRef = this.dialog.open(CommodityEditDialogComponent, {
-    //   width: '450px',
-    //   height: '250px',
-    //   panelClass: 'custom-dialog-container',
-    //   data: data,
-    // });
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   const id = this.myForm.controls['id'].value;
-    //   this.commodityList.loadData(id);
-    // });
-  }
-
   protected addCommodityBank() {
-    // this.editStoreroom.emit(null);
     const data = {
       storeroomId: this.myForm.controls['storeroomId'].value,
       mode: 'create',
@@ -311,12 +302,11 @@ export class StoreroomDocumentDetailComponent {
     dialogRef.afterClosed().subscribe((result) => {
       const id = this.myForm.controls['storeroomId'].value;
       this.loadData(id);
+      this.toastrService.success('تخصیص انبار به کالا با موفقیت ایجاد شد.');
     });
   }
 
   protected editRow(params: ICellRendererParams) {
-    // this.editStoreroom.emit(params.data);
-    // console.log(params);
     const data = {
       rowData: params.data,
       storeroomId: this.myForm.controls['storeroomId'].value,
@@ -332,11 +322,13 @@ export class StoreroomDocumentDetailComponent {
     dialogRef.afterClosed().subscribe((result) => {
       const id = this.myForm.controls['storeroomId'].value;
       this.loadData(id);
+      this.toastrService.success(
+        'جدول تخصیص انبار به کالا با موفقیت ویرایش شد'
+      );
     });
   }
 
   protected deleteRow(params: ICellRendererParams) {
-    console.log(params);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -353,8 +345,11 @@ export class StoreroomDocumentDetailComponent {
       this.commodityStoreroomService
         .deleteCommodityStoreroom(params.data.commodityId)
         .subscribe({
-          next: () => this.loadData(this.myForm.controls['storeroomId'].value),
-          error: (err) => console.log('Error deleting record:', err),
+          next: () => {
+            this.loadData(this.myForm.controls['storeroomId'].value);
+            this.toastrService.success('با موفقیت حذف شد');
+          },
+          error: (err) => this.toastrService.error(err.error),
         });
     });
   }
@@ -372,7 +367,7 @@ export class StoreroomDocumentDetailComponent {
             this.cdr.detectChanges();
           });
         },
-        error: (err) => console.error('Error from API:', err),
+        error: (err) => this.toastrService.error(err.error),
       });
   }
 

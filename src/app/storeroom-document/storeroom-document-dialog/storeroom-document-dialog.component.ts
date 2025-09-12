@@ -18,6 +18,7 @@ import { CommodityModel } from '../../models/commodity.model';
 import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
 import { MeasurementUnitModel } from '../../models/measurement-unit.model';
 import { MeasurementUnitService } from '../../services/measurement-unit.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-storeroom-document-dialog',
@@ -36,6 +37,7 @@ export class StoreroomDocumentDialogComponent {
     private commodityService: CommodityService,
     private commodityStoreroomService: CommodityStoreroomService,
     private measurementUnitService: MeasurementUnitService,
+    private toastrService: ToastService,
     public dialogRef: MatDialogRef<StoreroomDocumentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -52,29 +54,30 @@ export class StoreroomDocumentDialogComponent {
       next: (res) => {
         this.commodityList = res;
       },
-      error: (err) => {},
+      error: (err) => {
+        this.toastrService.error(err.error);
+      },
     });
 
     this.measurementUnitService.getMeasurementUnits().subscribe({
       next: (res) => {
         this.measurementUnitList = res;
       },
-      error: (err) => {},
+      error: (err) => {
+        this.toastrService.error(err.error);
+      },
     });
     this.myForm.get('commodityId')?.valueChanges.subscribe((value) => {
       const selected = this.commodityList.find((x) => x.id === value);
       if (selected) {
-        console.log(selected);
         this.myForm.patchValue({
           commodityCode: selected.commodityCode,
           measurementUnitId: selected.measurementUnitTitle,
-          // commodityId: selected.id,
         });
       }
     });
 
     if (this.data.mode === 'edit') {
-      console.log(this.data);
       this.myForm.patchValue({
         commodityId: this.data.rowData.commodityId,
         commodityCode: this.data.rowData.commodityCode,
@@ -86,7 +89,6 @@ export class StoreroomDocumentDialogComponent {
   }
 
   onConfirm(): void {
-    console.log(this.data);
     const payload = {
       commodityId: this.myForm.controls['commodityId'].value,
       storeroomId: this.data.storeroomId,
@@ -99,17 +101,20 @@ export class StoreroomDocumentDialogComponent {
           next: (res) => {
             this.dialogRef.close(this.data.id);
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     } else {
-      console.log(this.data);
       this.commodityStoreroomService
         .updateCommodityStoreroom(this.data.rowData.id, payload)
         .subscribe({
           next: (res) => {
             this.dialogRef.close(this.data.commodityId);
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     }
   }

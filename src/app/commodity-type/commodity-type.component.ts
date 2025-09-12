@@ -16,6 +16,7 @@ import { CommodityTypeService } from '../services/commodity-type.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CommodityTypeModel } from '../models/commodity-type.model';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-commodity-type',
@@ -99,6 +100,7 @@ export class CommodityTypeComponent implements OnInit {
     private commodityTypeService: CommodityTypeService,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
+    private toastrService: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -125,8 +127,11 @@ export class CommodityTypeComponent implements OnInit {
             createdDate: result.createDate.value,
           })
           .subscribe({
-            next: () => this.loadData(),
-            error: (err) => console.log(err),
+            next: () => {
+              this.loadData();
+              this.toastrService.success('ماهیت کالا با موفقیت ویرایش شد');
+            },
+            error: (err) => this.toastrService.error(err.error),
           });
       }
     });
@@ -147,8 +152,11 @@ export class CommodityTypeComponent implements OnInit {
       if (!confirmed) return;
 
       this.commodityTypeService.deleteCommodityType(params.data.id).subscribe({
-        next: () => this.loadData(),
-        error: (err) => console.error('Error deleting record:', err),
+        next: () => {
+          this.loadData();
+          this.toastrService.success('ماهیت کالا با موفقیت حذف شد');
+        },
+        error: (err) => this.toastrService.error(err.error),
       });
     });
   }
@@ -164,7 +172,7 @@ export class CommodityTypeComponent implements OnInit {
           this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
         });
       },
-      error: (err) => console.error('Error from API:', err),
+      error: (err) => this.toastrService.error(err.error),
     });
   }
 
@@ -185,8 +193,11 @@ export class CommodityTypeComponent implements OnInit {
             createdDate: result.createDate.value,
           })
           .subscribe({
-            next: () => this.loadData(),
-            error: (err) => console.error('Error from API:', err),
+            next: () => {
+              this.loadData();
+              this.toastrService.success('ماهیت کالا با موفقیت ایجاد شد');
+            },
+            error: (err) => this.toastrService.error(err.error),
           });
       }
     });

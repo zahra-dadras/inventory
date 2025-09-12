@@ -28,6 +28,7 @@ import { CommodityService } from '../../services/commodity.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
 import moment from 'moment-jalaali';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-commodity-detail',
@@ -65,7 +66,8 @@ export class CommodityDetailComponent {
     private location: Location,
     private commodityTypeService: CommodityTypeService,
     private measurementUnitService: MeasurementUnitService,
-    private commodityService: CommodityService
+    private commodityService: CommodityService,
+    private toastService: ToastService
   ) {
     this.myForm = new FormGroup({
       commodityCode: new FormControl(
@@ -86,14 +88,18 @@ export class CommodityDetailComponent {
       next: (res) => {
         this.commodityTypeList = res;
       },
-      error: (err) => {},
+      error: (err) => {
+        this.toastService.error(err.error.message);
+      },
     });
 
     this.measurementUnitService.getMeasurementUnits().subscribe({
       next: (res) => {
         this.measurementUnitList = res;
       },
-      error: (err) => {},
+      error: (err) => {
+        this.toastService.error(err.error.message);
+      },
     });
 
     if (this.route.snapshot.paramMap.has('id')) {
@@ -115,7 +121,9 @@ export class CommodityDetailComponent {
               this.commodityList.loadData(res.id);
             }
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastService.error(err.error.message);
+          },
         });
     } else {
       this.mode = 'create';
@@ -124,7 +132,9 @@ export class CommodityDetailComponent {
         next: (res) => {
           this.myForm.controls['commodityCode'].patchValue(res.commodityCode);
         },
-        error: (err) => {},
+        error: (err) => {
+          this.toastService.error(err.error);
+        },
       });
     }
   }
@@ -149,17 +159,22 @@ export class CommodityDetailComponent {
           next: (res) => {
             this.mode = 'edit';
             this.myForm.controls['id'].patchValue(res);
+            this.toastService.success('با موفقیت ایجاد شد');
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastService.error(err.error);
+          },
         });
     } else {
       this.commodityService
         .updateCommodity(this.myForm.controls['id'].value, payload)
         .subscribe({
           next: (res) => {
-            console.log(res);
+            this.toastService.success('با موفقیت ویراش شد');
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastService.error(err.error);
+          },
         });
     }
   }
@@ -175,7 +190,6 @@ export class CommodityDetailComponent {
   }
 
   storeroomDialog(value: any) {
-    console.log(value);
     const data = {
       rowData: value,
       commodityId: this.myForm.controls['id'].value,

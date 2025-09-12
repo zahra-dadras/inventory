@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
+import { ToastService } from '../../services/toast.service';
 // import * as moment from 'moment-jalaali';
 
 @Component({
@@ -49,7 +50,8 @@ export class CommodityTypeDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CommodityEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private commodityTypeService: CommodityTypeService
+    private commodityTypeService: CommodityTypeService,
+    private toastrService: ToastService
   ) {
     this.mode = data.mode;
   }
@@ -85,7 +87,7 @@ export class CommodityTypeDialogComponent implements OnInit {
           );
         },
         error: (err) => {
-          console.error('Error from API:', err);
+          this.toastrService.error(err.error);
         },
       });
     }

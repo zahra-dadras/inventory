@@ -16,6 +16,7 @@ import { AppEnum } from '../../enum/app-enum.enum';
 import { StoreroomService } from '../../services/storeroom.service';
 import { StoreroomModel } from '../../models/storeroom.model';
 import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-commodity-edit-dialog',
@@ -33,13 +34,14 @@ export class CommodityEditDialogComponent {
     private storeroomService: StoreroomService,
     public dialogRef: MatDialogRef<CommodityEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private commodityStoreroomService: CommodityStoreroomService
+    private commodityStoreroomService: CommodityStoreroomService,
+    private toastService: ToastService
   ) {
     this.myForm = new FormGroup({
       storeroomTitle: new FormControl('', Validators.required),
-      storeroomCode: new FormControl({ value: '', disabled: true }),
       storeroomChairman: new FormControl({ value: '', disabled: true }),
       storeroomPersianTitle: new FormControl({ value: '', disabled: true }),
+      value: new FormControl('', Validators.required),
       storeroomId: new FormControl(0),
     });
   }
@@ -48,7 +50,9 @@ export class CommodityEditDialogComponent {
       next: (res) => {
         this.storeroomList = res;
       },
-      error: (err) => {},
+      error: (err) => {
+        this.toastService.error(err.error);
+      },
     });
 
     this.myForm.get('storeroomTitle')?.valueChanges.subscribe((value) => {
@@ -75,34 +79,36 @@ export class CommodityEditDialogComponent {
   }
 
   onConfirm(): void {
-    console.log(this.data);
-    // if (this.data.mode === 'create') {
-    //   this.commodityStoreroomService
-    //     .createCommodityStoreroom(
-    //       this.data.commodityId,
-    //       this.myForm.controls['storeroomId'].value
-    //     )
-    //     .subscribe({
-    //       next: (res) => {
-    //         this.dialogRef.close(this.data.id);
-    //       },
-    //       error: (err) => {},
-    //     });
-    // } else {
-    //   console.log(this.data.rowData);
-    //   this.commodityStoreroomService
-    //     .updateCommodityStoreroom(
-    //       this.data.rowData.id,
-    //       this.data.commodityId,
-    //       this.myForm.controls['storeroomId'].value
-    //     )
-    //     .subscribe({
-    //       next: (res) => {
-    //         this.dialogRef.close(this.data.commodityId);
-    //       },
-    //       error: (err) => {},
-    //     });
-    // }
+    const payload = {
+      commodityId: this.data.commodityId,
+      storeroomId: this.myForm.controls['storeroomId'].value,
+      value: this.myForm.controls['value'].value,
+    };
+    if (this.data.mode === 'create') {
+      this.commodityStoreroomService
+        .createCommodityStoreroom(payload)
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close(this.data.id);
+            this.toastService.success('با موفقیت ایجاد شد');
+          },
+          error: (err) => {
+            this.toastService.error(err.error);
+          },
+        });
+    } else {
+      this.commodityStoreroomService
+        .updateCommodityStoreroom(this.data.rowData.id, payload)
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close(this.data.commodityId);
+            this.toastService.success('با موفقیت ویرایش شد');
+          },
+          error: (err) => {
+            this.toastService.error(err.error);
+          },
+        });
+    }
   }
 
   onCancel(): void {

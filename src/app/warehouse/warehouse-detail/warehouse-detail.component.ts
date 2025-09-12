@@ -19,12 +19,12 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 import { StoreroomService } from '../../services/storeroom.service';
 import { StoreroomTypeModel } from '../../models/storeroom-type.model';
 import { ActivatedRoute } from '@angular/router';
-import { error } from 'console';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
 import moment from 'moment-jalaali';
 import { Location } from '@angular/common';
 import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-warehouse-detail',
@@ -112,7 +112,8 @@ export class WarehouseDetailComponent {
     @Inject(PLATFORM_ID) private platformId: Object,
     private route: ActivatedRoute,
     private location: Location,
-    private commodityStoreroomService: CommodityStoreroomService
+    private commodityStoreroomService: CommodityStoreroomService,
+    private toastrService: ToastService
   ) {
     this.myForm = new FormGroup({
       storeroomTitle: new FormControl('', Validators.required),
@@ -124,7 +125,7 @@ export class WarehouseDetailComponent {
         Validators.required
       ),
       // status: new FormControl(''),
-      storeroomTypeId: new FormControl('', Validators.required),
+      storeroomTypeId: new FormControl(''),
       storeroomChairman: new FormControl('', Validators.required),
       minTemperature: new FormControl(''),
       maxTemperature: new FormControl(''),
@@ -146,7 +147,7 @@ export class WarehouseDetailComponent {
           this.storeroomTypes = res;
         },
         error: (err) => {
-          console.log(err);
+          this.toastrService.error(err.error);
         },
       });
 
@@ -170,21 +171,24 @@ export class WarehouseDetailComponent {
                   next: (res) => {
                     this.rowData = res;
                   },
-                  error: (err) => {},
+                  error: (err) => {
+                    this.toastrService.error(err.error);
+                  },
                 });
             },
-            error: (error) => {},
+            error: (error) => {
+              this.toastrService.error(error.error);
+            },
           });
-        // TODO: گرفتن دیتای رکورد از API
-        // this.service.getById(this.id).subscribe(res => this.formData = res);
-        console.log(this.myForm.value.id);
       } else {
         this.mode = 'create';
         this.storeroomService.getGenerateCodeStoreroom().subscribe({
           next: (res) => {
             this.myForm.patchValue({ storeroomCode: res.storeroomCode });
           },
-          error: (error) => {},
+          error: (error) => {
+            this.toastrService.error(error.error);
+          },
         });
       }
     }
@@ -192,15 +196,6 @@ export class WarehouseDetailComponent {
 
   protected closePage() {
     this.location.back();
-  }
-
-  private getStoreroomTypeById(id: number) {
-    this.storeroomService.getStoreroomTypeById(id).subscribe({
-      next: (res) => {
-        this.myForm.controls['storeroomType'].setValue(res);
-        console.log(this.myForm);
-      },
-    });
   }
 
   openDatePicker() {
@@ -216,8 +211,6 @@ export class WarehouseDetailComponent {
   protected save() {
     let form = this.myForm.controls;
     if (this.mode === 'create') {
-      console.log(this.myForm.controls['createDate'].value);
-
       this.storeroomService
         .createStoreroom({
           storeroomTitle: this.myForm.value.storeroomTitle,
@@ -232,13 +225,14 @@ export class WarehouseDetailComponent {
         })
         .subscribe({
           next: (res) => {
-            console.log(res);
             this.mode = 'edit';
+            this.toastrService.success('انبار با موفقیت ایجاد شد');
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     } else {
-      console.log(this.myForm);
       this.storeroomService
         .updateStoreroom(Number(this.myForm.value.id), {
           storeroomTitle: this.myForm.value.storeroomTitle,
@@ -252,10 +246,12 @@ export class WarehouseDetailComponent {
           storeroomTypeId: Number(this.myForm.value.storeroomTypeId),
         })
         .subscribe({
-          next: (res) => {
-            console.log(res);
+          next: () => {
+            this.toastrService.success('انبار با موفقیت ویرایش شد');
           },
-          error: (err) => {},
+          error: (err) => {
+            this.toastrService.error(err.error);
+          },
         });
     }
   }

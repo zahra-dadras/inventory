@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-auth',
@@ -19,7 +20,11 @@ export class AuthComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   switchTab(tab: 'login' | 'register') {
     this.activeTab = tab;
@@ -35,16 +40,18 @@ export class AuthComponent {
       .subscribe({
         next: (res: any) => {
           this.authService.saveToken(res.token);
-          alert('ورود موفقیت‌آمیز بود');
+          this.toastService.success('ورود موفقیت‌آمیز بود');
           this.router.navigate(['/home-page']);
         },
-        error: (err) => alert('خطا در ورود: ' + err.error.message),
+        error: (err) => {
+          this.toastService.error(err.error?.message);
+        },
       });
   }
 
   register() {
     if (this.password !== this.confirmPassword) {
-      alert('رمز عبور و تکرار آن یکسان نیست');
+      this.toastService.error('رمز عبور و تکرار آن یکسان نیست');
       return;
     }
 
@@ -56,10 +63,12 @@ export class AuthComponent {
       })
       .subscribe({
         next: () => {
-          alert('ثبت‌نام موفقیت‌آمیز بود، حالا وارد شوید');
+          this.toastService.success('ثبت‌نام موفقیت‌آمیز بود حالا وارد شوید');
           this.switchTab('login');
         },
-        error: (err) => alert('خطا در ثبت‌نام: ' + err.error.message),
+        error: (err) => {
+          this.toastService.error(err.error?.message);
+        },
       });
   }
 }

@@ -16,6 +16,7 @@ import { MeasurementUnitModel } from '../models/measurement-unit.model';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-measurement-unit',
@@ -90,6 +91,7 @@ export class MeasurementUnitComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private measurementUnitService: MeasurementUnitService,
+    private toastrService: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnInit(): void {
@@ -110,9 +112,8 @@ export class MeasurementUnitComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res);
         this.measurementUnitService
-          .createGenerateCodeMeasurementUnit({
+          .createMeasurementUnit({
             measurementUnitTitle: res.measurementUnitTitle.value,
             measurementUnitCode: res.measurementUnitCode.value,
             createdDate: res.createDate.value,
@@ -120,9 +121,10 @@ export class MeasurementUnitComponent implements OnInit {
           .subscribe({
             next: (data) => {
               this.loadData();
+              this.toastrService.success('واحد سنجش با موفقیت ایجاد شد');
             },
             error: (err) => {
-              console.error('Error from API:', err);
+              this.toastrService.error(err.error);
             },
           });
       }
@@ -140,11 +142,10 @@ export class MeasurementUnitComponent implements OnInit {
   loadData() {
     this.measurementUnitService.getMeasurementUnits().subscribe({
       next: (dataFromApi: MeasurementUnitModel[]) => {
-        console.log('Fetched data:', dataFromApi);
         this.rowData = [...dataFromApi]; // ← spread operator باعث میشه grid تغییر رو بفهمه
         (this.gridApi as any)?.setRowData(this.rowData); // ← مستقیم داده رو به grid میدی
       },
-      error: (err) => console.error(err),
+      error: (err) => this.toastrService.error(err.error),
     });
   }
 
@@ -158,8 +159,6 @@ export class MeasurementUnitComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('Dialog result:', result);
-
       if (result) {
         this.measurementUnitService
           .updateMeasurementUnit(result.id.value, {
@@ -168,11 +167,11 @@ export class MeasurementUnitComponent implements OnInit {
           })
           .subscribe({
             next: (res) => {
-              console.log('Update response:', res);
-              this.loadData(); // اینجا باید صدا زده بشه
+              this.loadData();
+              this.toastrService.success('واحد سنجش با موفقیت ویرایش شد');
             },
             error: (err) => {
-              console.error('Update error:', err);
+              this.toastrService.error(err.error);
             },
           });
       }
@@ -198,16 +197,15 @@ export class MeasurementUnitComponent implements OnInit {
         .deleteMeasurementUnit(params.data.id)
         .subscribe({
           next: () => {
-            // بعد از حذف موفق، دوباره داده‌ها از API گرفته می‌شود
+            this.toastrService.success('با موفقیت حذف شد');
             this.measurementUnitService.getMeasurementUnits().subscribe({
               next: (data) => {
                 this.rowData = [...data]; // spread operator برای رندر مجدد جدول
               },
-              error: (err) =>
-                console.error('Error fetching updated data:', err),
+              error: (err) => this.toastrService.error(err.error),
             });
           },
-          error: (err) => console.error('Error deleting record:', err),
+          error: (err) => this.toastrService.error(err.error),
         });
     });
   }

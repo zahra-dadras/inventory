@@ -14,6 +14,7 @@ import moment from 'moment-jalaali';
 import { MeasurementUnitService } from '../../services/measurement-unit.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-measurement-unit-dialog',
@@ -39,7 +40,8 @@ export class MeasurementUnitDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<MeasurementUnitDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private measurementUnitService: MeasurementUnitService
+    private measurementUnitService: MeasurementUnitService,
+    private toastrService: ToastService
   ) {
     this.mode = data.mode;
   }
@@ -76,7 +78,7 @@ export class MeasurementUnitDialogComponent implements OnInit {
           );
         },
         error: (err) => {
-          console.log(err);
+          this.toastrService.error(err.error);
         },
       });
     }

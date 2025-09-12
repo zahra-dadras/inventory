@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
 import { CommodityEditDialogComponent } from '../commodity-edit-dialog/commodity-edit-dialog.component';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-commodity-list',
@@ -120,7 +121,8 @@ export class CommodityListComponent {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private commodityStoreroomService: CommodityStoreroomService
+    private commodityStoreroomService: CommodityStoreroomService,
+    private toastService: ToastService
   ) {}
 
   protected addCommodityBank() {
@@ -148,8 +150,11 @@ export class CommodityListComponent {
       this.commodityStoreroomService
         .deleteCommodityStoreroom(params.data.commodityId)
         .subscribe({
-          next: () => this.loadData(params.data.commodityId),
-          error: (err) => console.error('Error deleting record:', err),
+          next: () => {
+            this.loadData(params.data.commodityId);
+            this.toastService.success('با موفقیت حذف شد');
+          },
+          error: (err) => this.toastService.error(err.error),
         });
     });
   }
@@ -171,7 +176,7 @@ export class CommodityListComponent {
             this.cdr.detectChanges();
           });
         },
-        error: (err) => console.error('Error from API:', err),
+        error: (err) => this.toastService.error(err.error),
       });
   }
   // ngOnChanges() {

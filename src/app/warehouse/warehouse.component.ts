@@ -22,6 +22,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import moment from 'moment-jalaali';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ToastService } from '../services/toast.service';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -127,6 +128,7 @@ export class WarehouseComponent {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private dialog: MatDialog,
+    private toastrService: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -154,7 +156,7 @@ export class WarehouseComponent {
           this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
         });
       },
-      error: (err) => console.error('Error from API:', err),
+      error: (err) => this.toastrService.error(err.error),
     });
   }
   private editRow(params: ICellRendererParams) {
@@ -178,8 +180,11 @@ export class WarehouseComponent {
       if (!confirmed) return;
 
       this.storeroomService.deleteStoreroom(params.data.id).subscribe({
-        next: () => this.loadData(),
-        error: (err) => console.error('Error deleting record:', err),
+        next: () => {
+          this.loadData();
+          this.toastrService.success('انبار با موفقیت حذف شد.');
+        },
+        error: (err) => this.toastrService.error(err.error),
       });
     });
   }

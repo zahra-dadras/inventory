@@ -23,7 +23,7 @@ export class MeasurementUnitService {
     );
   }
 
-  createGenerateCodeMeasurementUnit(
+  createMeasurementUnit(
     value: MeasurementUnitModel
   ): Observable<MeasurementUnitModel> {
     return this.http.post<MeasurementUnitModel>(this.apiUrl, value);

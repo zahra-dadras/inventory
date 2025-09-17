@@ -8,7 +8,9 @@ import {
   BarChart,
   Settings,
   User,
+  Layers,
   LucideAngularModule,
+  Ruler
 } from 'lucide-angular';
 
 @Component({
@@ -26,6 +28,8 @@ export class HomeComponent {
   BarChart = BarChart;
   Settings = Settings;
   User = User;
+  Layers = Layers;
+  Ruler = Ruler;
 
   constructor(private router: Router) {}
 

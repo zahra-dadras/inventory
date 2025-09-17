@@ -76,14 +76,6 @@ export class StoreroomDocumentComponent implements OnInit {
       filter: true,
     },
     {
-      headerName: this.appEnum.STOREROOM_DOCUMENT_GROUP,
-      field: 'documentGroup',
-      cellStyle: { textAlign: 'right' },
-      flex: 1,
-      sortable: true,
-      filter: true,
-    },
-    {
       headerName: this.appEnum.STOREROOM_DOCUMENT_TYPE,
       field: 'documentType',
       cellStyle: { textAlign: 'right' },

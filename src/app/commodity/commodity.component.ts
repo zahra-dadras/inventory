@@ -153,7 +153,7 @@ export class CommodityComponent implements OnInit {
     });
   }
 
-  protected addCommodityBank() {
+  protected addCommodity() {
     this.router.navigate(['/commodity/detail']);
   }
 

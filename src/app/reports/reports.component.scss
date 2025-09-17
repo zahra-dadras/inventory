@@ -1,0 +1,150 @@
+.content {
+    width: 100%;
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding-top: 20px;
+    overflow: auto;
+  }
+
+  .text {
+    padding: 10px;
+    direction: rtl;
+    font-weight: bold;
+    height: 20px;
+    width: 95%;
+    color: #0d1a66;
+}
+  
+  .form {
+    width: 90%;
+    // height: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f8faff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 50, 0.15);
+  }
+  .form-container {
+    display: flex;
+    direction: rtl;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+
+  .reportTable {
+    width: 92%;
+}
+
+.item-style {
+    // height: 50px;
+    width: calc(33.33% - 10px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  select {
+    padding: 10px;
+    border: 1px solid #b0c4ff;
+    border-radius: 8px;
+    background-color: #ffffff;
+    transition: 0.3s;
+    font-size: 14px;
+  }
+
+select:focus{
+    border-color: #0d1a66;
+    box-shadow: 0 0 5px rgba(13, 26, 102, 0.2);
+    outline: none;
+  }
+
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+  
+  .active-button {
+    background-color: #0d1a66;
+    color: #ffffff;
+  }
+  
+  .inactive-button {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+  
+  .close {
+    background-color: #f1f1f1;
+    color: #0d1a66;
+  }
+  .buttonForm{
+    padding-bottom: 10px;
+    padding-left: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  .clear-btn {
+    position: absolute;
+    top: 27px;
+    right: calc(100% - 30px);
+    // width: calc(33.33% - 10px);
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    color: red;
+  }
+  .clearClass{
+    position: relative;
+  }
+
+  ::ng-deep {
+    .ag-theme-custom {
+      width: 100%;
+      overflow-y: auto;
+      font-family: 'Arial', sans-serif; }
+  
+      .ag-header-cell {
+        background-color: #c6d6ff; // هدر آبی کم‌رنگ
+        color: #0d1a66;
+        font-weight: bold;
+        border-bottom: 2px solid #b0c4ff;
+        direction: rtl;
+      }
+  
+      .ag-header-cell:hover {
+        background-color: #b0c4ff;
+      }
+  
+      .ag-cell {
+        background-color: #ffffff;
+        // border-radius: 6px;
+        // border: 1px solid #d0d4e0;
+        // padding: 10px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+  
+      .ag-cell:hover {
+        background-color: #e6ebff;
+        transform: scale(1.02);
+      }
+  
+      .ag-row {
+        border-bottom: 1px solid #d0d4e0;
+      }
+  
+      .ag-row:hover {
+        background-color: #f0f4ff;
+      }  
+  }

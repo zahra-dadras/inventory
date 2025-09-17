@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InventoryModel } from '../models/inventory.model';
 
-interface commodityStoreroomModel {
+export interface commodityStoreroomModel {
   id: number;
   commodityId: number;
   storeroomId: number;
@@ -47,6 +47,24 @@ export class CommodityStoreroomService {
         storeroomId: number;
       }[]
     >(`${this.apiUrl}/${commodityId}`);
+  }
+
+  getReports(
+    commodityId?: number,
+    storeroomId?: number
+  ): Observable<commodityStoreroomModel[]> {
+    let url = `${this.apiUrl}/report`;
+
+    // پارامترها رو داینامیک اضافه می‌کنیم
+    const params: string[] = [];
+    if (commodityId) params.push(`commodityId=${commodityId}`);
+    if (storeroomId) params.push(`storeroomId=${storeroomId}`);
+
+    if (params.length > 0) {
+      url += `?${params.join('&')}`;
+    }
+
+    return this.http.get<commodityStoreroomModel[]>(url);
   }
 
   getCommodityStoreroomByStoreroomId(

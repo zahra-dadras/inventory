@@ -51,7 +51,7 @@ export class WarehouseDetailComponent {
   columnDefs: ColDef[] = [
     {
       headerName: this.appEnum.INVENTORY,
-      field: 'inventory',
+      field: 'value',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,

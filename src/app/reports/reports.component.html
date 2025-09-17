@@ -1,0 +1,36 @@
+<div class="content">
+    <div class="form">
+        <div class="text">{{appEnum.INVENTORY_REPORT}}</div>
+        <form [formGroup]="myForm" class="form-container">
+            <div class="item-style">
+                <label for="commodityId">{{appEnum.COMMODITY}}</label>
+                <select id="commodityId" class="clearClass" formControlName="commodityId">
+                    <option *ngFor="let commodity of commodityList" [ngValue]="commodity.id">
+                        {{commodity.commodityPersianTitle}}</option>
+                </select>
+                <button type="button" *ngIf="myForm.controls['commodityId'].value" class="clear-btn"
+                    (click)="clearSelection('commodityId')">✖</button>
+            </div>
+            <div class="item-style">
+                <label for="storeroomId">{{appEnum.STOREROOM}}</label>
+                <select id="storeroomId" formControlName="storeroomId">
+                    <option *ngFor="let storeroom of storeroomList" [ngValue]="storeroom.id">
+                        {{storeroom.storeroomTitle}}</option>
+                </select>
+                <button *ngIf="myForm.controls['storeroomId'].value" type="button" class="clear-btn"
+                    (click)="clearSelection('storeroomId')">✖</button>
+            </div>
+        </form>
+        <div class="buttonForm">
+            <button type="submit" [disabled]="myForm.invalid"
+                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}"
+                (click)="onSubmit()">{{appEnum.SEARCH}}</button>
+            <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
+        </div>
+    </div>
+    <div class="reportTable">
+        <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
+            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine">
+        </ag-grid-angular>
+    </div>
+</div>

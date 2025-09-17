@@ -17,7 +17,8 @@
 
         <div>
             <label for="measurementUnit">{{appEnum.MEASUREMENT_UNIT}}</label>
-            <input id="measurementUnit" formControlName="measurementUnitId" placeholder="{{appEnum.MEASUREMENT_UNIT}}" />
+            <input id="measurementUnit" formControlName="measurementUnitId"
+                placeholder="{{appEnum.MEASUREMENT_UNIT}}" />
         </div>
         <div>
             <label for="value">{{appEnum.VALUE}}</label>
@@ -28,7 +29,7 @@
     <div class="button">
         <button type="submit" [disabled]="myForm.invalid"
             [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" class="active-button"
-            (click)="onConfirm()">{{appEnum.SAVE_COMMODITY}}</button>
+            (click)="onConfirm()">{{appEnum.SAVE}}</button>
         <button type="submit" class="close" (click)="onCancel()">{{appEnum.CLOSE}}</button>
     </div>
 </div>

@@ -59,10 +59,8 @@ export class StoreroomDocumentDetailComponent {
   myForm: FormGroup;
   protected appEnum = AppEnum;
   storeroomList: StoreroomModel[] = [];
-  documentTypeList = [{ value: 'رسید' }, { value: 'فاکتور' }];
-  documentGroupList = [{ value: 'خرید' }, { value: 'فروش' }];
+  documentTypeList = [{ value: 'ورود' }, { value: 'خروج' }];
   selectedFruit: string = '';
-  // childData: any;
   mode: 'create' | 'edit' = 'create';
   isFormValid: boolean = false;
   showDatePicker = false;
@@ -168,7 +166,6 @@ export class StoreroomDocumentDetailComponent {
       ),
       documentTitle: new FormControl('', Validators.required),
       documentType: new FormControl('', Validators.required),
-      documentGroup: new FormControl('', Validators.required),
       documentDate: new FormControl(''),
       storeroomId: new FormControl('', Validators.required),
       deliverer: new FormControl(''),
@@ -240,7 +237,6 @@ export class StoreroomDocumentDetailComponent {
       documentDate: form['documentDate'].value,
       documentTitle: form['documentTitle'].value,
       documentType: form['documentType'].value,
-      documentGroup: form['documentGroup'].value,
       storeroomId: Number(form['storeroomId'].value),
       reciever: form['reciever'].value,
       deliverer: form['deliverer'].value,

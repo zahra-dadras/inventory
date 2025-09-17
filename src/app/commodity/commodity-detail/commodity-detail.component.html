@@ -1,7 +1,7 @@
 <div class="content">
     <div class="form">
-        <div  class="text">{{appEnum.CREATE_AND_EDIT_COMMODITY}}</div>
-        <form [formGroup]="myForm" class="form-container" >
+        <div class="text">{{appEnum.CREATE_AND_EDIT_COMMODITY}}</div>
+        <form [formGroup]="myForm" class="form-container">
 
             <div class="item-style">
                 <label for="CommodityCode">{{appEnum.Commodity_COD}}</label>
@@ -24,34 +24,28 @@
             <div class="item-style">
                 <label for="category">{{appEnum.NATURE_OF_THE_GOODS}}</label>
                 <select id="category" formControlName="commodityTypeId">
-                    <option *ngFor="let commodityType of commodityTypeList" [ngValue]="commodityType.id">{{ commodityType.commodityTypeTitle }}</option>
+                    <option *ngFor="let commodityType of commodityTypeList" [ngValue]="commodityType.id">{{
+                        commodityType.commodityTypeTitle }}</option>
                 </select>
             </div>
 
             <div class="item-style">
                 <label for="unitMeasurement">{{appEnum.UNIT_OF_MEASUREMENT}}</label>
                 <select id="unitMeasurement" formControlName="measurementUnitId">
-                    <option *ngFor="let measurementUnit of measurementUnitList " [ngValue]="measurementUnit.id">{{measurementUnit.measurementUnitTitle}}</option>
+                    <option *ngFor="let measurementUnit of measurementUnitList " [ngValue]="measurementUnit.id">
+                        {{measurementUnit.measurementUnitTitle}}</option>
                 </select>
             </div>
 
             <div class="item-style">
                 <label for="createDate">{{ appEnum.CREATE_DATE }}</label>
-                <input
-                  id="createDate"
-                  type="text"
-                  formControlName="createDate"
-                  placeholder="{{ appEnum.CREATE_DATE }}"
-                  readonly
-                  (click)="openDatePicker()"
-                />
-              
-                <!-- تقویم شمسی -->
-                <app-persian-datepicker
-                  *ngIf="showDatePicker"
-                  (dateSelected)="onDateSelected($event)">
+                <input id="createDate" type="text" formControlName="createDate" placeholder="{{ appEnum.CREATE_DATE }}"
+                    readonly (click)="openDatePicker()" />
+
+
+                <app-persian-datepicker *ngIf="showDatePicker" (dateSelected)="onDateSelected($event)">
                 </app-persian-datepicker>
-              </div>
+            </div>
 
             <div class="textarea-container">
                 <label for="description">توضیحات:</label>
@@ -61,7 +55,8 @@
         </form>
         <div class="buttonForm">
             <button type="submit" [disabled]="myForm.invalid"
-                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" (click)="onSubmit()">{{appEnum.SAVE_COMMODITY}}</button>
+                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}"
+                (click)="onSubmit()">{{appEnum.SAVE}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
         </div>
     </div>

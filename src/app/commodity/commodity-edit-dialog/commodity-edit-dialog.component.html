@@ -18,7 +18,8 @@
 
         <div>
             <label for="storeroomType">{{appEnum.STOREROOM_TYPE}}</label>
-            <input id="storeroomType" formControlName="storeroomPersianTitle" placeholder="{{appEnum.STOREROOM_TYPE}}" />
+            <input id="storeroomType" formControlName="storeroomPersianTitle"
+                placeholder="{{appEnum.STOREROOM_TYPE}}" />
         </div>
         <div>
             <label for="value">{{appEnum.VALUE}}</label>
@@ -29,7 +30,7 @@
     <div class="button">
         <button type="submit" [disabled]="myForm.invalid"
             [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" class="active-button"
-            (click)="onConfirm()">{{appEnum.SAVE_COMMODITY}}</button>
+            (click)="onConfirm()">{{appEnum.SAVE}}</button>
         <button type="submit" class="close" (click)="onCancel()">{{appEnum.CLOSE}}</button>
     </div>
 </div>

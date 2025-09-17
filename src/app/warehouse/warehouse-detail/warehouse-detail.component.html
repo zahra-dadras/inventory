@@ -24,21 +24,12 @@
             </div>
             <div class="item-style">
                 <label for="createDate">{{ appEnum.CREATE_DATE }}</label>
-                <input
-                  id="createDate"
-                  type="text"
-                  formControlName="createDate"
-                  placeholder="{{ appEnum.CREATE_DATE }}"
-                  readonly
-                  (click)="openDatePicker()"
-                />
-              
-                <!-- تقویم شمسی -->
-                <app-persian-datepicker
-                  *ngIf="showDatePicker"
-                  (dateSelected)="onDateSelected($event)">
+                <input id="createDate" type="text" formControlName="createDate" placeholder="{{ appEnum.CREATE_DATE }}"
+                    readonly (click)="openDatePicker()" />
+
+                <app-persian-datepicker *ngIf="showDatePicker" (dateSelected)="onDateSelected($event)">
                 </app-persian-datepicker>
-              </div>
+            </div>
             <div class="text">
                 {{appEnum.STOREROOM_ENVIRONMENTAL_CONDITIONS}}</div>
             <div class="storeroom-environmental-conditions">
@@ -63,16 +54,18 @@
         </form>
         <div class="buttonForm">
             <button type="submit" [disabled]="myForm.invalid"
-                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}" (click)="save()">{{appEnum.SAVE}}</button>
+                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}"
+                (click)="save()">{{appEnum.SAVE}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
         </div>
     </div>
     <div class="ag-grid-container" *ngIf="mode === 'edit'">
         <div class="text">
-            {{appEnum.COMMODITY_TO_STORE}}
+            {{appEnum.COMMODITY_IN_STOREROOM}}
         </div>
         <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
-            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine"  (gridReady)="onGridReady($event)">
+            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine"
+            (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
 </div>

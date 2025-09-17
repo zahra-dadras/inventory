@@ -10,6 +10,7 @@ import { StoreroomDocumentDetailComponent } from './storeroom-document/storeroom
 import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './guard/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { ReportsComponent } from './reports/reports.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -72,6 +73,11 @@ export const routes: Routes = [
   {
     path: 'storeroom-document/edit/:id',
     component: StoreroomDocumentDetailComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
     canActivate: [authGuard],
   },
 ];

@@ -61,14 +61,6 @@ export class WarehouseComponent {
       },
     },
     {
-      headerName: this.appEnum.STATUS,
-      field: 'status',
-      cellStyle: { textAlign: 'right' },
-      flex: 1,
-      sortable: true,
-      filter: true,
-    },
-    {
       headerName: this.appEnum.STOREROOM_MANAGER,
       field: 'storeroomChairman',
       cellStyle: { textAlign: 'right' },
@@ -142,7 +134,6 @@ export class WarehouseComponent {
   loadData() {
     this.storeroomService.getStoreroomList().subscribe({
       next: (data) => {
-        // داخل NgZone اجرا کن تا change detection حتما تریگر بشه
         this.ngZone.run(() => {
           this.rowData = data.map((item) => ({
             ...item,

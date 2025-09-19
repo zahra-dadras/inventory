@@ -12,6 +12,7 @@ import {
   LucideAngularModule,
   Ruler
 } from 'lucide-angular';
+import { AppEnum } from '../enum/app-enum.enum';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ import {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  // آیکون‌ها
+
   Warehouse = Warehouse;
   Package = Package;
   FileText = FileText;
@@ -30,6 +31,8 @@ export class HomeComponent {
   User = User;
   Layers = Layers;
   Ruler = Ruler;
+
+  protected appEnum = AppEnum;
 
   constructor(private router: Router) {}
 

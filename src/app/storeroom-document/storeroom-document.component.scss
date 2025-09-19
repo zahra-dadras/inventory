@@ -1,115 +1,111 @@
 .ag-grid-container {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  background-color: #f4f7fc;
+  box-sizing: border-box;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.text {
+  padding: 10px;
+  font-weight: bold;
+  color: #0d1a66;
+  font-size: 18px;
+  direction: rtl;
+}
+
+.add-button {
+  width: 35px;
+  height: 35px;
+  background-color: #5a7dff;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 0;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-button:hover {
+  background-color: #3d5ce0;
+  transform: scale(1.1);
+}
+
+::ng-deep {
+  .ag-theme-custom {
     width: 100%;
-    height: 100%;
-    padding: 15px;
-    background-color: #f4f7fc; // پس زمینه کلی
-    box-sizing: border-box;
+    overflow-y: auto;
+    font-family: 'Arial', sans-serif;
   }
-  
-  .buttons {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
-  
-  .text {
-    padding: 10px;
+
+  .ag-header-cell {
+    background-color: #c6d6ff;
+    color: #0d1a66;
     font-weight: bold;
-    color: #0d1a66; // سرمه‌ای
-    font-size: 18px;
+    border-bottom: 2px solid #b0c4ff;
     direction: rtl;
   }
-  
-  .add-button {
-    width: 35px;
-    height: 35px;
-    background-color: #5a7dff; // آبی کم‌رنگ
-    border-radius: 50%;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    border: 0;
-    cursor: pointer;
+
+  .ag-header-cell:hover {
+    background-color: #b0c4ff;
+  }
+
+  .ag-cell {
+    background-color: #ffffff;
     transition: background-color 0.3s, transform 0.2s;
   }
-  
-  .add-button:hover {
+
+  .ag-cell:hover {
+    background-color: #e6ebff;
+    transform: scale(1.02);
+  }
+
+  .ag-row {
+    border-bottom: 1px solid #d0d4e0;
+  }
+
+  .ag-row:hover {
+    background-color: #f0f4ff;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 6px 12px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  .edit-btn {
+    background-color: #5a7dff;
+    color: white;
+  }
+
+  .edit-btn:hover {
     background-color: #3d5ce0;
-    transform: scale(1.1);
   }
-  
-  /* AG-Grid Custom Theme */
-  ::ng-deep {
-    .ag-theme-custom {
-      width: 100%;
-      overflow-y: auto;
-      font-family: 'Arial', sans-serif; }
-  
-      .ag-header-cell {
-        background-color: #c6d6ff; // هدر آبی کم‌رنگ
-        color: #0d1a66;
-        font-weight: bold;
-        border-bottom: 2px solid #b0c4ff;
-        direction: rtl;
-      }
-  
-      .ag-header-cell:hover {
-        background-color: #b0c4ff;
-      }
-  
-      .ag-cell {
-        background-color: #ffffff;
-        // border-radius: 6px;
-        // border: 1px solid #d0d4e0;
-        // padding: 10px;
-        transition: background-color 0.3s, transform 0.2s;
-      }
-  
-      .ag-cell:hover {
-        background-color: #e6ebff;
-        transform: scale(1.02);
-      }
-  
-      .ag-row {
-        border-bottom: 1px solid #d0d4e0;
-      }
-  
-      .ag-row:hover {
-        background-color: #f0f4ff;
-      }
-  
-      .edit-btn,
-      .delete-btn {
-        padding: 6px 12px;
-        margin: 2px;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        border-radius: 5px;
-        transition: 0.3s;
-      }
-  
-      .edit-btn {
-        background-color: #5a7dff;
-        color: white;
-      }
-  
-      .edit-btn:hover {
-        background-color: #3d5ce0;
-      }
-  
-      .delete-btn {
-        background-color: #ff6b6b;
-        color: white;
-      }
-  
-      .delete-btn:hover {
-        background-color: #e04343;
-      }
-    
+
+  .delete-btn {
+    background-color: #ff6b6b;
+    color: white;
   }
-  
+
+  .delete-btn:hover {
+    background-color: #e04343;
+  }
+
+}

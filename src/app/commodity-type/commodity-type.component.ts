@@ -131,7 +131,7 @@ export class CommodityTypeComponent implements OnInit {
               this.loadData();
               this.toastrService.success('ماهیت کالا با موفقیت ویرایش شد');
             },
-            error: (err) => this.toastrService.error(err.error),
+            error: (err) => this.toastrService.error(err.error.message),
           });
       }
     });
@@ -156,7 +156,7 @@ export class CommodityTypeComponent implements OnInit {
           this.loadData();
           this.toastrService.success('ماهیت کالا با موفقیت حذف شد');
         },
-        error: (err) => this.toastrService.error(err.error),
+        error: (err) => this.toastrService.error(err.error.message),
       });
     });
   }
@@ -169,10 +169,10 @@ export class CommodityTypeComponent implements OnInit {
           if (this.gridApi) {
             this.gridApi.setRowData(this.rowData);
           }
-          this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
+          this.cdr.detectChanges(); 
         });
       },
-      error: (err) => this.toastrService.error(err.error),
+      error: (err) => this.toastrService.error(err.error.message),
     });
   }
 
@@ -197,7 +197,7 @@ export class CommodityTypeComponent implements OnInit {
               this.loadData();
               this.toastrService.success('ماهیت کالا با موفقیت ایجاد شد');
             },
-            error: (err) => this.toastrService.error(err.error),
+            error: (err) => this.toastrService.error(err.error.message),
           });
       }
     });

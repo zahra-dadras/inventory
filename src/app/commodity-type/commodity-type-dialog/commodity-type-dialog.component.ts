@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AppEnum } from '../../enum/app-enum.enum';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -20,7 +19,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
 import { ToastService } from '../../services/toast.service';
-// import * as moment from 'moment-jalaali';
 
 @Component({
   selector: 'app-commodity-type-dialog',
@@ -104,13 +102,9 @@ export class CommodityTypeDialogComponent implements OnInit {
 
   onConfirm(): void {
     if (this.myForm.valid) {
-      const formData = this.myForm.value;
-      const gregorianDate = moment(formData.createDate, 'jYYYY/jMM/jDD').format(
-        'YYYY-MM-DD'
-      );
       this.dialogRef.close(this.myForm.controls);
     } else {
-      console.log('Form is not valid');
+      this.toastrService.error('Form is not valid')
     }
   }
 

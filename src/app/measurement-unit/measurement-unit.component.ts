@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MeasurementUnitDialogComponent } from './measurement-unit-dialog/measurement-unit-dialog.component';
 import { AppEnum } from '../enum/app-enum.enum';
 import { AgGridModule } from 'ag-grid-angular';
 import {
   ColDef,
-  GridApi,
   GridOptions,
   GridReadyEvent,
   ICellRendererParams,
@@ -27,6 +26,7 @@ import { ToastService } from '../services/toast.service';
 })
 export class MeasurementUnitComponent implements OnInit {
   protected appEnum = AppEnum;
+  protected rowData: MeasurementUnitModel[] = [];
 
   columnDefs: ColDef[] = [
     {
@@ -74,8 +74,6 @@ export class MeasurementUnitComponent implements OnInit {
     },
   ];
 
-  rowData: MeasurementUnitModel[] = [];
-
   gridOptions: GridOptions = {
     rowModelType: 'clientSide',
     domLayout: 'normal',
@@ -86,16 +84,21 @@ export class MeasurementUnitComponent implements OnInit {
   defaultColDef: ColDef = {
     filter: true,
   };
+
   isBrowser = false;
-  private gridApi!: GridApi;
+  gridApi!: any;
+
   constructor(
     private dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
     private measurementUnitService: MeasurementUnitService,
     private toastrService: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
     this.isBrowser = isPlatformBrowser(this.platformId);
     if (this.isBrowser) {
       this.loadData();
@@ -119,7 +122,7 @@ export class MeasurementUnitComponent implements OnInit {
             createdDate: res.createDate.value,
           })
           .subscribe({
-            next: (data) => {
+            next: () => {
               this.loadData();
               this.toastrService.success('واحد سنجش با موفقیت ایجاد شد');
             },
@@ -130,22 +133,24 @@ export class MeasurementUnitComponent implements OnInit {
       }
     });
   }
-  // gridApi!: GridApi<MeasurementUnitModel>;
 
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
     this.loadData();
   }
 
-  // constructor(private cdRef: ChangeDetectorRef, ...) { }
-
   loadData() {
     this.measurementUnitService.getMeasurementUnits().subscribe({
-      next: (dataFromApi: MeasurementUnitModel[]) => {
-        this.rowData = [...dataFromApi]; // ← spread operator باعث میشه grid تغییر رو بفهمه
-        (this.gridApi as any)?.setRowData(this.rowData); // ← مستقیم داده رو به grid میدی
+      next: (data) => {
+        this.ngZone.run(() => {
+          this.rowData = [...data];
+          if (this.gridApi) {
+            this.gridApi.setRowData(this.rowData);
+          }
+          this.cdr.detectChanges(); 
+        });
       },
-      error: (err) => this.toastrService.error(err.error),
+      error: (err) => this.toastrService.error(err.error.message),
     });
   }
 
@@ -171,7 +176,7 @@ export class MeasurementUnitComponent implements OnInit {
               this.toastrService.success('واحد سنجش با موفقیت ویرایش شد');
             },
             error: (err) => {
-              this.toastrService.error(err.error);
+              this.toastrService.error(err.error.message);
             },
           });
       }
@@ -190,22 +195,16 @@ export class MeasurementUnitComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (!confirmed) return; // اگر کاربر لغو کرد، هیچ کاری انجام نشود
+      if (!confirmed) return; 
 
-      // صدا زدن API حذف
       this.measurementUnitService
         .deleteMeasurementUnit(params.data.id)
         .subscribe({
           next: () => {
             this.toastrService.success('با موفقیت حذف شد');
-            this.measurementUnitService.getMeasurementUnits().subscribe({
-              next: (data) => {
-                this.rowData = [...data]; // spread operator برای رندر مجدد جدول
-              },
-              error: (err) => this.toastrService.error(err.error),
-            });
+             this.loadData();
           },
-          error: (err) => this.toastrService.error(err.error),
+          error: (err) => this.toastrService.error(err.error.message),
         });
     });
   }

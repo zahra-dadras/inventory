@@ -144,19 +144,17 @@ export class WarehouseComponent {
           if (this.gridApi) {
             this.gridApi.setRowData(this.rowData);
           }
-          this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
+          this.cdr.detectChanges(); 
         });
       },
       error: (err) => this.toastrService.error(err.error),
     });
   }
   private editRow(params: ICellRendererParams) {
-    console.log(params.data.id);
     this.router.navigate(['/warehouse/edit', params.data.id]);
   }
 
   private deleteRow(params: ICellRendererParams) {
-    console.log(params);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {

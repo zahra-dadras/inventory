@@ -3,7 +3,7 @@
     <form [formGroup]="myForm" class="form-container">
 
         <div>
-            <label for="commodityTitle">{{appEnum.Commodity_TITLE}}</label>
+            <label for="commodityTitle">{{appEnum.COMMODITY_TITLE}}</label>
             <select id="commodityTitle" formControlName="commodityId">
                 <option *ngFor="let commodity of commodityList " [ngValue]="commodity.id">
                     {{commodity.commodityPersianTitle}}</option>

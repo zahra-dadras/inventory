@@ -75,7 +75,7 @@ export class ReportsComponent implements OnInit {
       filter: true,
     },
     {
-      headerName: this.appEnum.COMMODITY_ID,
+      headerName: this.appEnum.COMMODITY_CODE,
       field: 'commodityCode',
       cellStyle: { textAlign: 'right' },
       flex: 1,
@@ -92,7 +92,6 @@ export class ReportsComponent implements OnInit {
 
   onGridReady(params: any) {
     this.gridApi = params.api;
-    // this.loadData();
   }
   rowData: commodityStoreroomModel[] = [];
 
@@ -100,7 +99,7 @@ export class ReportsComponent implements OnInit {
     rowModelType: 'clientSide',
     domLayout: 'normal',
     headerHeight: 40,
-    getRowHeight: (params) => 40,
+    getRowHeight: () => 40,
   };
 
   constructor(

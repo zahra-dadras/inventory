@@ -22,9 +22,7 @@
             </div>
         </form>
         <div class="buttonForm">
-            <button type="submit" [disabled]="myForm.invalid"
-                [ngClass]="{'active-button': !myForm.invalid, 'inactive-button': myForm.invalid}"
-                (click)="onSubmit()">{{appEnum.SEARCH}}</button>
+            <button type="submit" class="active-button" (click)="onSubmit()">{{appEnum.SEARCH}}</button>
             <button type="submit" class="close" (click)="closePage()">{{appEnum.CLOSE}}</button>
         </div>
     </div>

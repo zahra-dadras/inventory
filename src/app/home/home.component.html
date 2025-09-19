@@ -2,37 +2,37 @@
   <div class="cards-grid">
     <div class="card" (click)="navigate('/warehouse-list')">
       <lucide-icon [img]="Warehouse" size="40"></lucide-icon>
-      <h3>فهرست انبار</h3>
+      <h3>{{appEnum.STOREROOMS_LIST}}</h3>
       <p>مدیریت انبارها و جزئیات آن‌ها</p>
     </div>
 
     <div class="card" (click)="navigate('/commodity')">
       <lucide-icon [img]="Package" size="40"></lucide-icon>
-      <h3>فهرست کالا</h3>
+      <h3>{{appEnum.COMMODITY_LIST}}</h3>
       <p>مدیریت کالاها و اطلاعات مرتبط</p>
     </div>
 
     <div class="card" (click)="navigate('/storeroom-document')">
       <lucide-icon [img]="FileText" size="40"></lucide-icon>
-      <h3>سند انبار</h3>
+      <h3>{{appEnum.STOREROOM_DOCUMENT}}</h3>
       <p>ثبت و مشاهده اسناد انبار</p>
     </div>
 
     <div class="card" (click)="navigate('/reports')">
       <lucide-icon [img]="BarChart" size="40"></lucide-icon>
-      <h3>گزارش‌گیری</h3>
+      <h3>{{appEnum.REPORT}}</h3>
       <p>دریافت گزارش‌های مدیریتی</p>
     </div>
 
     <div class="card" (click)="navigate('/commodity-type')">
       <lucide-icon [img]="Layers" size="40"></lucide-icon>
-      <h3>ماهیت کالا</h3>
+      <h3>{{appEnum.COMMODITY_TYPE}}</h3>
       <p>تعریف و مدیریت ماهیت کالا</p>
     </div>
 
     <div class="card" (click)="navigate('/measurement-unit')">
       <lucide-icon [img]="Ruler" size="40"></lucide-icon>
-      <h3>واحد سنجش</h3>
+      <h3>{{appEnum.MEASUREMENT_UNIT}}</h3>
       <p>مدیریت واحدهای سنجش کالا</p>
     </div>
   </div>

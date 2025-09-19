@@ -32,7 +32,6 @@ import { ToastService } from '../../services/toast.service';
 export class MeasurementUnitDialogComponent implements OnInit {
   protected mode: 'create' | 'edit' = 'create';
   protected appEnum = AppEnum;
-  protected isFormValid: boolean = false;
   protected myForm!: FormGroup;
   protected showDatePicker = false;
 
@@ -87,23 +86,14 @@ export class MeasurementUnitDialogComponent implements OnInit {
     this.showDatePicker = !this.showDatePicker;
   }
   onDateSelected(date: string) {
-    // تاریخ انتخاب‌شده از تقویم میاد (Jalali)
     this.myForm.patchValue({ createDate: date });
-    this.showDatePicker = false; // تقویم بسته میشه
+    this.showDatePicker = false; 
   }
   onConfirm(): void {
     if (this.myForm.valid) {
-      const formData = this.myForm.value;
-      console.log('Form Data to Send:', formData);
-      const gregorianDate = moment(formData.createDate, 'jYYYY/jMM/jDD').format(
-        'YYYY-MM-DD'
-      );
-      console.log('Gregorian to DB:', gregorianDate);
       this.dialogRef.close(this.myForm.controls);
-      this.isFormValid = true;
     } else {
-      console.log('Form is not valid');
-      this.isFormValid = false;
+      this.toastrService.error('Form is not valid')
     }
   }
 

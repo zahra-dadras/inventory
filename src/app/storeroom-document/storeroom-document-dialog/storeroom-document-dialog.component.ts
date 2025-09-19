@@ -46,7 +46,7 @@ export class StoreroomDocumentDialogComponent {
       commodityCode: new FormControl({ value: '', disabled: true }),
       measurementUnitId: new FormControl({ value: '', disabled: true }),
       value: new FormControl('', Validators.required),
-      //  storeroomId: new FormControl(0),
+      id: new FormControl(0)
     });
   }
   ngOnInit(): void {
@@ -55,7 +55,7 @@ export class StoreroomDocumentDialogComponent {
         this.commodityList = res;
       },
       error: (err) => {
-        this.toastrService.error(err.error);
+        this.toastrService.error(err.error.message);
       },
     });
 
@@ -64,7 +64,7 @@ export class StoreroomDocumentDialogComponent {
         this.measurementUnitList = res;
       },
       error: (err) => {
-        this.toastrService.error(err.error);
+        this.toastrService.error(err.error.message);
       },
     });
     this.myForm.get('commodityId')?.valueChanges.subscribe((value) => {
@@ -82,8 +82,8 @@ export class StoreroomDocumentDialogComponent {
         commodityId: this.data.rowData.commodityId,
         commodityCode: this.data.rowData.commodityCode,
         measurementUnitId: this.data.rowData.measurementUnitTitle,
-        // storeroomPersianTitle: this.data.rowData.storeroomPersianTitle,
-        // storeroomId: this.data.rowData.id,
+        value: this.data.rowData.value,
+        id: this.data.rowData.id
       });
     }
   }
@@ -93,6 +93,7 @@ export class StoreroomDocumentDialogComponent {
       commodityId: this.myForm.controls['commodityId'].value,
       storeroomId: this.data.storeroomId,
       value: this.myForm.controls['value'].value,
+      storeroomDocumentId: this.data.storeroomDocumentId
     };
     if (this.data.mode === 'create') {
       this.commodityStoreroomService
@@ -102,18 +103,18 @@ export class StoreroomDocumentDialogComponent {
             this.dialogRef.close(this.data.id);
           },
           error: (err) => {
-            this.toastrService.error(err.error);
+            this.toastrService.error(err.error.message);
           },
         });
     } else {
       this.commodityStoreroomService
-        .updateCommodityStoreroom(this.data.rowData.id, payload)
+        .updateCommodityStoreroom(this.myForm.controls['id'].value, payload)
         .subscribe({
           next: (res) => {
             this.dialogRef.close(this.data.commodityId);
           },
           error: (err) => {
-            this.toastrService.error(err.error);
+            this.toastrService.error(err.error.message);
           },
         });
     }

@@ -1,70 +1,69 @@
 .sidebar {
-    min-height: 100%;
-    background: #0d1a66;
-    color: white;
-    font-family: 'Tahoma', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; // دکمه خروج پایین بیاد
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
-  
-  .sidebar li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 12px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .sidebar li:hover {
-    background: #1e2e99;
-  }
-  
-  .sidebar li.active {
-    background: #3b82f6;
-    font-weight: bold;
-  }
-  
-  .dropdown-toggle {
-    flex-direction: column;
-  }
-  .anbarSettingStyle{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  .dropdown {
-    background: #132080;
-  }
-  
-  .dropdown li {
-    padding-left: 40px;
-    font-size: 14px;
-  }
-  
-  /* دکمه خروج */
-  .logout-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 20px;
-    cursor: pointer;
-    background: #162155;
-    transition: background 0.3s ease;
-  }
-  
-  .logout-btn:hover {
-    background: #3b82f6;
-  }
-  
+  min-height: 100%;
+  background: #0d1a66;
+  color: white;
+  font-family: 'Tahoma', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sidebar li:hover {
+  background: #1e2e99;
+}
+
+.sidebar li.active {
+  background: #3b82f6;
+  font-weight: bold;
+}
+
+.dropdown-toggle {
+  flex-direction: column;
+}
+
+.anbarSettingStyle {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown {
+  background: #132080;
+}
+
+.dropdown li {
+  padding-left: 40px;
+  font-size: 14px;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  cursor: pointer;
+  background: #162155;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #3b82f6;
+}

@@ -36,6 +36,7 @@ import { ToastService } from '../services/toast.service';
 })
 export class StoreroomDocumentComponent implements OnInit {
   protected appEnum = AppEnum;
+  protected rowData: StoreroomDocumentModel[] = [];
 
   columnDefs: ColDef[] = [
     {
@@ -121,7 +122,6 @@ export class StoreroomDocumentComponent implements OnInit {
     this.gridApi = params.api;
     this.loadData();
   }
-  rowData: StoreroomDocumentModel[] = [];
 
   gridOptions: GridOptions = {
     rowModelType: 'clientSide',
@@ -150,10 +150,10 @@ export class StoreroomDocumentComponent implements OnInit {
           if (this.gridApi) {
             this.gridApi.setRowData(this.rowData);
           }
-          this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
+          this.cdr.detectChanges(); 
         });
       },
-      error: (err) => this.toastrService.error(err.error),
+      error: (err) => this.toastrService.error(err.error.message),
     });
   }
 
@@ -186,7 +186,7 @@ export class StoreroomDocumentComponent implements OnInit {
             this.loadData();
             this.toastrService.success('سند انبار با موفقیت حذف شد');
           },
-          error: (err) => this.toastrService.error(err.error),
+          error: (err) => this.toastrService.error(err.error.message),
         });
     });
   }

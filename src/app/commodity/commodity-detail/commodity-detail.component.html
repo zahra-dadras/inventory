@@ -1,28 +1,28 @@
 <div class="content">
-    <div class="form">
+    <div class="form-content">
         <div class="text">{{appEnum.CREATE_AND_EDIT_COMMODITY}}</div>
         <form [formGroup]="myForm" class="form-container">
 
             <div class="item-style">
-                <label for="CommodityCode">{{appEnum.Commodity_COD}}</label>
-                <input id="CommodityCode" formControlName="commodityCode" placeholder="{{appEnum.Commodity_COD}}" />
+                <label for="CommodityCode">{{appEnum.COMMODITY_CODE}}</label>
+                <input id="CommodityCode" formControlName="commodityCode" placeholder="{{appEnum.COMMODITY_CODE}}" />
             </div>
 
             <div class="item-style">
-                <label for="CommodityPersianTitle">{{appEnum.Commodity_PERSIAN_TITLE}}</label>
+                <label for="CommodityPersianTitle">{{appEnum.COMMODITY_PERSIAN_TITLE}}</label>
                 <input id="CommodityPersianTitle" formControlName="commodityPersianTitle"
-                    placeholder="{{appEnum.Commodity_PERSIAN_TITLE}}" />
+                    placeholder="{{appEnum.COMMODITY_PERSIAN_TITLE}}" />
             </div>
 
             <div class="item-style">
-                <label for="CommodityEnglishTitle">{{appEnum.Commodity_ENGLISH_TITLE}}</label>
+                <label for="CommodityEnglishTitle">{{appEnum.COMMODITY_ENGLISH_TITLE}}</label>
                 <input id="CommodityEnglishTitle" formControlName="commodityEnglishTitle"
-                    placeholder="{{appEnum.Commodity_ENGLISH_TITLE}}" />
+                    placeholder="{{appEnum.COMMODITY_ENGLISH_TITLE}}" />
             </div>
 
 
             <div class="item-style">
-                <label for="category">{{appEnum.NATURE_OF_THE_GOODS}}</label>
+                <label for="category">{{appEnum.COMMODITY_TYPE}}</label>
                 <select id="category" formControlName="commodityTypeId">
                     <option *ngFor="let commodityType of commodityTypeList" [ngValue]="commodityType.id">{{
                         commodityType.commodityTypeTitle }}</option>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="item-style">
-                <label for="unitMeasurement">{{appEnum.UNIT_OF_MEASUREMENT}}</label>
+                <label for="unitMeasurement">{{appEnum.MEASUREMENT_UNIT}}</label>
                 <select id="unitMeasurement" formControlName="measurementUnitId">
                     <option *ngFor="let measurementUnit of measurementUnitList " [ngValue]="measurementUnit.id">
                         {{measurementUnit.measurementUnitTitle}}</option>
@@ -48,7 +48,7 @@
             </div>
 
             <div class="textarea-container">
-                <label for="description">توضیحات:</label>
+                <label for="description">{{appEnum.DESCRIPTION}}</label>
                 <textarea id="description" formControlName="description" rows="5"
                     placeholder="لطفاً توضیحات خود را وارد کنید..."></textarea>
             </div>

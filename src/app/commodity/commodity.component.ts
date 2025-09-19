@@ -98,7 +98,7 @@ export class CommodityComponent implements OnInit {
       filter: true,
     },
     {
-      headerName: this.appEnum.COMMODITY_ID,
+      headerName: this.appEnum.COMMODITY_CODE,
       field: 'commodityCode',
       cellStyle: { textAlign: 'right' },
       flex: 1,
@@ -146,7 +146,7 @@ export class CommodityComponent implements OnInit {
           if (this.gridApi) {
             this.gridApi.setRowData(this.rowData);
           }
-          this.cdr.detectChanges(); // 👈 اجباراً رندر می‌کنه
+          this.cdr.detectChanges(); 
         });
       },
       error: (err) => this.toastService.error(err.error.message),

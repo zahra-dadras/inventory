@@ -55,15 +55,14 @@ import { ToastService } from '../../services/toast.service';
   styleUrl: './storeroom-document-detail.component.scss',
 })
 export class StoreroomDocumentDetailComponent {
-  // @ViewChild(CommodityListComponent) commodityList!: CommodityListComponent;
-  myForm: FormGroup;
+  protected myForm: FormGroup;
   protected appEnum = AppEnum;
-  storeroomList: StoreroomModel[] = [];
-  documentTypeList = [{ value: 'ورود' }, { value: 'خروج' }];
-  selectedFruit: string = '';
-  mode: 'create' | 'edit' = 'create';
-  isFormValid: boolean = false;
-  showDatePicker = false;
+  protected storeroomList: StoreroomModel[] = [];
+  protected documentTypeList = [{ value: 'ورود' }, { value: 'خروج' }];
+  protected mode: 'create' | 'edit' = 'create';
+  protected showDatePicker: boolean = false;
+  protected isBrowser = false;
+  protected rowData: InventoryModel[] = []; 
 
   columnDefs: ColDef[] = [
     {
@@ -88,7 +87,7 @@ export class StoreroomDocumentDetailComponent {
       },
     },
     {
-      headerName: this.appEnum.AMOUNT,
+      headerName: this.appEnum.VALUE,
       field: 'value',
       cellStyle: { textAlign: 'right' },
       flex: 1,
@@ -104,7 +103,7 @@ export class StoreroomDocumentDetailComponent {
       filter: true,
     },
     {
-      headerName: this.appEnum.Commodity_ENGLISH_TITLE,
+      headerName: this.appEnum.COMMODITY_ENGLISH_TITLE,
       field: 'commodityEnglishTitle',
       cellStyle: { textAlign: 'right' },
       flex: 1,
@@ -112,7 +111,7 @@ export class StoreroomDocumentDetailComponent {
       filter: true,
     },
     {
-      headerName: this.appEnum.Commodity_COD,
+      headerName: this.appEnum.COMMODITY_CODE,
       field: 'commodityCode',
       cellStyle: { textAlign: 'right' },
       flex: 1,
@@ -128,8 +127,7 @@ export class StoreroomDocumentDetailComponent {
       filter: true,
     },
   ];
-  isBrowser = false;
-  rowData: InventoryModel[] = [];
+
   gridApi!: any;
 
   defaultColDef: ColDef = {
@@ -180,7 +178,7 @@ export class StoreroomDocumentDetailComponent {
         this.storeroomList = res;
       },
       error: (err) => {
-        this.toastrService.error(err.error);
+        this.toastrService.error(err.error.message);
       },
     });
 
@@ -195,7 +193,6 @@ export class StoreroomDocumentDetailComponent {
             if (res.id) {
               const patchedData = {
                 ...res,
-                // تبدیل تاریخ میلادی به شمسی
                 documentDate: res.documentDate
                   ? moment(res.documentDate)
                       .locale('fa')
@@ -203,16 +200,14 @@ export class StoreroomDocumentDetailComponent {
                   : null,
               };
               this.myForm.patchValue(patchedData);
-              // this.childData = { id: res.id };
-              // this.commodityList.loadData(res.id);
 
               if (this.isBrowser) {
-                this.loadData(res.storeroomId);
+                this.loadData(res.id);
               }
             }
           },
           error: (err) => {
-            this.toastrService.error(err.error);
+            this.toastrService.error(err.error.message);
           },
         });
     } else {
@@ -225,7 +220,7 @@ export class StoreroomDocumentDetailComponent {
           );
         },
         error: (err) => {
-          this.toastrService.error(err.error);
+          this.toastrService.error(err.error.message);
         },
       });
     }
@@ -251,11 +246,11 @@ export class StoreroomDocumentDetailComponent {
           next: (res) => {
             this.mode = 'edit';
             this.myForm.controls['id'].patchValue(res);
-            this.loadData(this.myForm.controls['storeroomId'].value);
+            this.loadData(this.myForm.controls['id'].value);
             this.toastrService.success('سند انبار با موفقیت ایجاد شد');
           },
           error: (err) => {
-            this.toastrService.error(err.error);
+            this.toastrService.error(err.error.message);
           },
         });
     } else {
@@ -263,11 +258,11 @@ export class StoreroomDocumentDetailComponent {
         .updateStoreroomDocument(this.myForm.controls['id'].value, payload)
         .subscribe({
           next: (res) => {
-            this.loadData(this.myForm.controls['storeroomId'].value);
+            this.loadData(this.myForm.controls['id'].value);
             this.toastrService.success('سند انبار با موفقیت ویرایش شد');
           },
           error: (err) => {
-            this.toastrService.error(err.error);
+            this.toastrService.error(err.error.message);
           },
         });
     }
@@ -278,7 +273,6 @@ export class StoreroomDocumentDetailComponent {
   }
 
   onDateSelected(date: string) {
-    // تاریخ انتخاب‌شده از تقویم میاد (Jalali)
     this.myForm.patchValue({ documentDate: date });
     this.showDatePicker = false;
   }
@@ -287,6 +281,7 @@ export class StoreroomDocumentDetailComponent {
     const data = {
       storeroomId: this.myForm.controls['storeroomId'].value,
       mode: 'create',
+      storeroomDocumentId: this.myForm.controls['id'].value
     };
     const dialogRef = this.dialog.open(StoreroomDocumentDialogComponent, {
       width: '450px',
@@ -296,7 +291,7 @@ export class StoreroomDocumentDetailComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      const id = this.myForm.controls['storeroomId'].value;
+      const id = this.myForm.controls['id'].value;
       this.loadData(id);
       this.toastrService.success('تخصیص انبار به کالا با موفقیت ایجاد شد.');
     });
@@ -306,6 +301,7 @@ export class StoreroomDocumentDetailComponent {
     const data = {
       rowData: params.data,
       storeroomId: this.myForm.controls['storeroomId'].value,
+      storeroomDocumentId: this.myForm.controls['id'].value,
       mode: 'edit',
     };
     const dialogRef = this.dialog.open(StoreroomDocumentDialogComponent, {
@@ -316,7 +312,7 @@ export class StoreroomDocumentDetailComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      const id = this.myForm.controls['storeroomId'].value;
+      const id = this.myForm.controls['id'].value;
       this.loadData(id);
       this.toastrService.success(
         'جدول تخصیص انبار به کالا با موفقیت ویرایش شد'
@@ -339,20 +335,20 @@ export class StoreroomDocumentDetailComponent {
       if (!confirmed) return;
 
       this.commodityStoreroomService
-        .deleteCommodityStoreroom(params.data.commodityId)
+        .deleteCommodityStoreroom(params.data.id)
         .subscribe({
           next: () => {
-            this.loadData(this.myForm.controls['storeroomId'].value);
+            this.loadData(this.myForm.controls['id'].value);
             this.toastrService.success('با موفقیت حذف شد');
           },
-          error: (err) => this.toastrService.error(err.error),
+          error: (err) => this.toastrService.error(err.error.message),
         });
     });
   }
 
   loadData(id: number) {
     this.commodityStoreroomService
-      .getCommodityStoreroomByStoreroomId(id)
+      .getCommodityStoreroomByStoreroomDocumentId(id)
       .subscribe({
         next: (data) => {
           this.ngZone.run(() => {
@@ -363,7 +359,7 @@ export class StoreroomDocumentDetailComponent {
             this.cdr.detectChanges();
           });
         },
-        error: (err) => this.toastrService.error(err.error),
+        error: (err) => this.toastrService.error(err.error.message),
       });
   }
 

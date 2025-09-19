@@ -51,7 +51,7 @@ export class CommodityEditDialogComponent {
         this.storeroomList = res;
       },
       error: (err) => {
-        this.toastService.error(err.error);
+        this.toastService.error(err.error.message);
       },
     });
 
@@ -73,7 +73,8 @@ export class CommodityEditDialogComponent {
         storeroomCode: this.data.rowData.storeroomCode,
         storeroomChairman: this.data.rowData.storeroomChairman,
         storeroomPersianTitle: this.data.rowData.storeroomPersianTitle,
-        storeroomId: this.data.rowData.id,
+        storeroomId: this.data.rowData.storeroomId,
+        value: this.data.rowData.value
       });
     }
   }
@@ -83,6 +84,7 @@ export class CommodityEditDialogComponent {
       commodityId: this.data.commodityId,
       storeroomId: this.myForm.controls['storeroomId'].value,
       value: this.myForm.controls['value'].value,
+      storeroomDocumentId: null
     };
     if (this.data.mode === 'create') {
       this.commodityStoreroomService
@@ -93,7 +95,7 @@ export class CommodityEditDialogComponent {
             this.toastService.success('با موفقیت ایجاد شد');
           },
           error: (err) => {
-            this.toastService.error(err.error);
+            this.toastService.error(err.error.message);
           },
         });
     } else {
@@ -105,7 +107,7 @@ export class CommodityEditDialogComponent {
             this.toastService.success('با موفقیت ویرایش شد');
           },
           error: (err) => {
-            this.toastService.error(err.error);
+            this.toastService.error(err.error.message);
           },
         });
     }

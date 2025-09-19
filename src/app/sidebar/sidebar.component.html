@@ -1,55 +1,50 @@
 <nav class="sidebar">
-    <ul>
-      <li routerLink="/warehouse-list" routerLinkActive="active">
-        <lucide-icon [img]="Home" size="20"></lucide-icon>
-        فهرست انبار
-      </li>
-  
-      <li routerLink="/commodity" routerLinkActive="active">
-        <lucide-icon [img]="Package" size="20"></lucide-icon>
-        فهرست کالا
-      </li>
-  
-      <li routerLink="/storeroom-document" routerLinkActive="active">
-        <lucide-icon [img]="FileText" size="20"></lucide-icon>
-        سند انبار
-      </li>
-  
-      <li routerLink="/reports" routerLinkActive="active">
-        <lucide-icon [img]="BarChart" size="20"></lucide-icon>
-        گزارش‌گیری
-      </li>
-  
-      <!-- تنظیمات انبار -->
-      <li (click)="toggleSettings()" class="dropdown-toggle">
-        <div class="anbarSettingStyle">
-            <lucide-icon
-              [img]="showSettings ? ChevronUp : ChevronDown"
-              size="18"
-            ></lucide-icon>
-            <lucide-icon [img]="Settings" size="20"></lucide-icon>
-            تنظیمات انبار
-        </div>
-    
+  <ul>
+    <li routerLink="/warehouse-list" routerLinkActive="active">
+      <lucide-icon [img]="Home" size="20"></lucide-icon>
+      {{appEnum.STOREROOMS_LIST}}
+    </li>
 
-        <ul class="dropdown" *ngIf="showSettings">
-            <li routerLink="/commodity-type" routerLinkActive="active">
-              <lucide-icon [img]="Layers" size="18"></lucide-icon>
-              ماهیت کالا
-            </li>
-            <li routerLink="/measurement-unit" routerLinkActive="active">
-              <lucide-icon [img]="Ruler" size="18"></lucide-icon>
-              واحد سنجش
-            </li>
-          </ul>
-      </li>
-   
-    </ul>
-  
-    <!-- دکمه خروج -->
-    <div class="logout-btn" (click)="logout()">
-      <lucide-icon [img]="LogOut" size="20"></lucide-icon>
-      خروج
-    </div>
-  </nav>
-  
+    <li routerLink="/commodity" routerLinkActive="active">
+      <lucide-icon [img]="Package" size="20"></lucide-icon>
+      {{appEnum.COMMODITY_LIST}}
+    </li>
+
+    <li routerLink="/storeroom-document" routerLinkActive="active">
+      <lucide-icon [img]="FileText" size="20"></lucide-icon>
+      {{appEnum.STOREROOM_DOCUMENT}}
+    </li>
+
+    <li routerLink="/reports" routerLinkActive="active">
+      <lucide-icon [img]="BarChart" size="20"></lucide-icon>
+      {{appEnum.REPORT}}
+    </li>
+
+
+    <li (click)="toggleSettings()" class="dropdown-toggle">
+      <div class="anbarSettingStyle">
+        <lucide-icon [img]="showSettings ? ChevronUp : ChevronDown" size="18"></lucide-icon>
+        <lucide-icon [img]="Settings" size="20"></lucide-icon>
+        {{appEnum.STOREROOM_SETTING}}
+      </div>
+
+
+      <ul class="dropdown" *ngIf="showSettings">
+        <li routerLink="/commodity-type" routerLinkActive="active">
+          <lucide-icon [img]="Layers" size="18"></lucide-icon>
+          {{appEnum.COMMODITY_TYPE}}
+        </li>
+        <li routerLink="/measurement-unit" routerLinkActive="active">
+          <lucide-icon [img]="Ruler" size="18"></lucide-icon>
+          {{appEnum.MEASUREMENT_UNIT}}
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+
+  <div class="logout-btn" (click)="logout()">
+    <lucide-icon [img]="LogOut" size="20"></lucide-icon>
+    {{appEnum.LOG_OUT}}
+  </div>
+</nav>

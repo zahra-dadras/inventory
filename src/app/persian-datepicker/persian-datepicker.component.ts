@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import moment from 'moment-jalaali';
-import { AppEnum } from '../enum/app-enum.enum';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +17,6 @@ export class PersianDatepickerComponent {
   selectedDate: string | null = null;
 
   constructor() {
-    // moment.loadPersian({ dialect: 'persian-modern' });
     this.generateCalendar(moment());
   }
 
@@ -37,6 +35,6 @@ export class PersianDatepickerComponent {
 
   selectDate(date: string) {
     this.selectedDate = date;
-    this.dateSelected.emit(date); // به فرم میفرسته
+    this.dateSelected.emit(date);
   }
 }

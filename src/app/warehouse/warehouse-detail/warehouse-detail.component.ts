@@ -74,7 +74,7 @@ export class WarehouseDetailComponent {
       filter: true,
     },
     {
-      headerName: this.appEnum.COMMODITY_ID,
+      headerName: this.appEnum.COMMODITY_CODE,
       field: 'commodityCode',
       cellStyle: { textAlign: 'right' },
       flex: 1,
@@ -100,7 +100,6 @@ export class WarehouseDetailComponent {
 
   onGridReady(params: any) {
     this.gridApi = params.api;
-    // this.loadData();
   }
 
   isBrowser = false;
@@ -124,7 +123,6 @@ export class WarehouseDetailComponent {
         },
         Validators.required
       ),
-      // status: new FormControl(''),
       storeroomTypeId: new FormControl(''),
       storeroomChairman: new FormControl('', Validators.required),
       minTemperature: new FormControl(''),
@@ -139,9 +137,7 @@ export class WarehouseDetailComponent {
   ngOnInit(): void {
     this.isBrowser = isPlatformBrowser(this.platformId);
     if (this.isBrowser) {
-      // this.loadData();
       this.statuses = ['فعال', 'غیرفعال'];
-      // this.storeroomTypes = ['نوع انبار1', 'نوع انبار2', 'نوع انبار3'];
       this.storeroomService.getStoreroomTypeList().subscribe({
         next: (res) => {
           this.storeroomTypes = res;
@@ -159,7 +155,6 @@ export class WarehouseDetailComponent {
             next: (res) => {
               const patchedData = {
                 ...res,
-                // تبدیل تاریخ میلادی به شمسی
                 createDate: res.createDate
                   ? moment(res.createDate).locale('fa').format('jYYYY/jMM/jDD')
                   : null,
@@ -203,9 +198,8 @@ export class WarehouseDetailComponent {
   }
 
   onDateSelected(date: string) {
-    // تاریخ انتخاب‌شده از تقویم میاد (Jalali)
     this.myForm.patchValue({ createDate: date });
-    this.showDatePicker = false; // تقویم بسته میشه
+    this.showDatePicker = false;
   }
 
   protected save() {

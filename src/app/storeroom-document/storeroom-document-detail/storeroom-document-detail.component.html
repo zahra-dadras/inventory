@@ -1,6 +1,6 @@
 <div class="content">
     <div class="form">
-        <div class="text">{{appEnum.CREATE_AND_EDIT_STOREROOM_DOCUMENT_FORM}}</div>
+        <div class="text">{{appEnum.STOREROOM_DOCUMENT_CREATE_AND_EDIT_FORM}}</div>
         <form [formGroup]="myForm" class="form-container">
 
             <div class="item-style">
@@ -31,13 +31,6 @@
                         documentType.value }}</option>
                 </select>
             </div>
-
-            <!-- <div class="item-style">
-                <label for="documentGroup">{{appEnum.STOREROOM_DOCUMENT_TYPE}}</label>
-                <select id="documentGroup" formControlName="documentGroup">
-                    <option *ngFor="let documentGroup of documentGroupList" [ngValue]="documentGroup.value">{{ documentGroup.value }}</option>
-                </select>
-            </div> -->
 
             <div class="item-style">
                 <label for="storeroomId">{{appEnum.STOREROOM}}</label>

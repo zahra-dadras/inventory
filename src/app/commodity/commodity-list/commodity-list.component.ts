@@ -8,7 +8,6 @@ import {
   NgZone,
   Output,
   PLATFORM_ID,
-  SimpleChanges,
 } from '@angular/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -16,10 +15,8 @@ import { MatTableModule } from '@angular/material/table';
 import { AgGridModule } from 'ag-grid-angular';
 import { AppEnum } from '../../enum/app-enum.enum';
 import { ColDef, GridOptions, ICellRendererParams } from 'ag-grid-community';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
-import { CommodityEditDialogComponent } from '../commodity-edit-dialog/commodity-edit-dialog.component';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { ToastService } from '../../services/toast.service';
 
@@ -50,7 +47,7 @@ export class CommodityListComponent {
         const editButton = document.createElement('button');
         editButton.innerText = 'Edit';
         editButton.className = 'edit-btn';
-        editButton.addEventListener('click', () => this.editRow(params));
+        editButton.addEventListener('click', () => this.editCommodityInStoreroomRow(params));
 
         const deleteButton = document.createElement('button');
         deleteButton.innerText = 'Delete';
@@ -62,6 +59,14 @@ export class CommodityListComponent {
 
         return container;
       },
+    },
+    {
+      headerName: this.appEnum.VALUE,
+      field: 'value',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
     },
     {
       headerName: this.appEnum.STOREROOM_TYPE,
@@ -112,11 +117,10 @@ export class CommodityListComponent {
     rowModelType: 'clientSide',
     domLayout: 'normal',
     headerHeight: 40,
-    getRowHeight: (params) => 40,
+    getRowHeight: () => 40,
   };
 
   constructor(
-    private router: Router,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
@@ -125,11 +129,11 @@ export class CommodityListComponent {
     private toastService: ToastService
   ) {}
 
-  protected addCommodityBank() {
+  protected addCommodityToStoreroom() {
     this.editStoreroom.emit(null);
   }
 
-  protected editRow(params: ICellRendererParams) {
+  protected editCommodityInStoreroomRow(params: ICellRendererParams) {
     this.editStoreroom.emit(params.data);
   }
 
@@ -148,13 +152,13 @@ export class CommodityListComponent {
       if (!confirmed) return;
 
       this.commodityStoreroomService
-        .deleteCommodityStoreroom(params.data.commodityId)
+        .deleteCommodityStoreroom(params.data.id)
         .subscribe({
           next: () => {
             this.loadData(params.data.commodityId);
             this.toastService.success('با موفقیت حذف شد');
           },
-          error: (err) => this.toastService.error(err.error),
+          error: (err) => this.toastService.error(err.error.message),
         });
     });
   }
@@ -176,19 +180,13 @@ export class CommodityListComponent {
             this.cdr.detectChanges();
           });
         },
-        error: (err) => this.toastService.error(err.error),
+        error: (err) => this.toastService.error(err.error.message),
       });
   }
-  // ngOnChanges() {
-  //   if (this.storeroomDialogData) {
-  //     console.log('داده اومد:', this.storeroomDialogData);
-  //   }
-  // }
 
   @Input() set storeroomDialogData(value: { id: number }) {
     if (value) {
       this.loadData(Number(value.id));
     }
   }
-  // @Input() storeroomDialogData: any;
 }

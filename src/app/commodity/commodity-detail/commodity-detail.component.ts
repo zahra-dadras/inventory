@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectorRef,
   Component,
-  Inject,
-  NgZone,
-  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import {
@@ -47,21 +43,18 @@ import { ToastService } from '../../services/toast.service';
 })
 export class CommodityDetailComponent {
   @ViewChild(CommodityListComponent) commodityList!: CommodityListComponent;
-  myForm: FormGroup;
   protected appEnum = AppEnum;
-  commodityTypeList: CommodityTypeModel[] = [];
-  measurementUnitList: MeasurementUnitModel[] = [];
-  selectedFruit: string = '';
+  protected commodityTypeList: CommodityTypeModel[] = [];
+  protected measurementUnitList: MeasurementUnitModel[] = [];
+  protected mode: 'create' | 'edit' = 'create';
+  protected showDatePicker = false;
+ 
+  myForm: FormGroup;
   childData: any;
-  mode: 'create' | 'edit' = 'create';
-  isFormValid: boolean = false;
-  showDatePicker = false;
+
 
   constructor(
     public dialog: MatDialog,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: Object,
     private route: ActivatedRoute,
     private location: Location,
     private commodityTypeService: CommodityTypeService,
@@ -111,7 +104,6 @@ export class CommodityDetailComponent {
             if (res.id) {
               const patchedData = {
                 ...res,
-                // تبدیل تاریخ میلادی به شمسی
                 createDate: res.createDate
                   ? moment(res.createDate).locale('fa').format('jYYYY/jMM/jDD')
                   : null,
@@ -133,7 +125,7 @@ export class CommodityDetailComponent {
           this.myForm.controls['commodityCode'].patchValue(res.commodityCode);
         },
         error: (err) => {
-          this.toastService.error(err.error);
+          this.toastService.error(err.error.message);
         },
       });
     }
@@ -162,18 +154,18 @@ export class CommodityDetailComponent {
             this.toastService.success('با موفقیت ایجاد شد');
           },
           error: (err) => {
-            this.toastService.error(err.error);
+            this.toastService.error(err.error.message);
           },
         });
     } else {
       this.commodityService
         .updateCommodity(this.myForm.controls['id'].value, payload)
         .subscribe({
-          next: (res) => {
+          next: () => {
             this.toastService.success('با موفقیت ویراش شد');
           },
           error: (err) => {
-            this.toastService.error(err.error);
+            this.toastService.error(err.error.message);
           },
         });
     }
@@ -184,7 +176,6 @@ export class CommodityDetailComponent {
   }
 
   onDateSelected(date: string) {
-    // تاریخ انتخاب‌شده از تقویم میاد (Jalali)
     this.myForm.patchValue({ createDate: date });
     this.showDatePicker = false;
   }

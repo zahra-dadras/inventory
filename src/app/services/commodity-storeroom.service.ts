@@ -55,7 +55,7 @@ export class CommodityStoreroomService {
   ): Observable<commodityStoreroomModel[]> {
     let url = `${this.apiUrl}/report`;
 
-    // پارامترها رو داینامیک اضافه می‌کنیم
+    
     const params: string[] = [];
     if (commodityId) params.push(`commodityId=${commodityId}`);
     if (storeroomId) params.push(`storeroomId=${storeroomId}`);
@@ -70,9 +70,16 @@ export class CommodityStoreroomService {
   getCommodityStoreroomByStoreroomId(
     storeroomId: number
   ): Observable<InventoryModel[]> {
-    console.log(storeroomId);
     return this.http.get<InventoryModel[]>(
       `${this.apiUrl}/commodity-list-by-storeroom-id/${storeroomId}`
+    );
+  }
+
+  getCommodityStoreroomByStoreroomDocumentId(
+    storeroomDocumentId: number
+  ): Observable<InventoryModel[]> {
+    return this.http.get<InventoryModel[]>(
+      `${this.apiUrl}/commodity-list-by-storeroom-document-id/${storeroomDocumentId}`
     );
   }
 
@@ -81,7 +88,7 @@ export class CommodityStoreroomService {
   }
 
   updateCommodityStoreroom(id: number, value: InventoryModel): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${value.commodityId}`, value);
+    return this.http.put<any>(`${this.apiUrl}/${id}`, value);
   }
 
   deleteCommodityStoreroom(id: number): Observable<any> {

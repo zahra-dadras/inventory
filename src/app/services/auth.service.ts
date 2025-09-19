@@ -42,7 +42,6 @@ export class AuthService {
     }
   }
 
-  // 🟢 decode کردن توکن JWT
   private decodeToken(token: string): any {
     try {
       const payload = token.split('.')[1];
@@ -52,7 +51,6 @@ export class AuthService {
     }
   }
 
-  // 🟢 بررسی وضعیت لاگین
   isLoggedIn(): boolean {
     const token = this.getToken();
     if (!token) return false;
@@ -62,7 +60,7 @@ export class AuthService {
 
     const now = Math.floor(Date.now() / 1000);
     if (decoded.exp < now) {
-      this.logout(); // اگر منقضی شده باشه، لاگ‌اوت کن
+      this.logout();
       return false;
     }
 

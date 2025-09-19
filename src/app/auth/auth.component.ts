@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../services/toast.service';
+import { AppEnum } from '../enum/app-enum.enum';
 
 @Component({
   selector: 'app-auth',
@@ -13,12 +14,14 @@ import { ToastService } from '../services/toast.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  activeTab: 'login' | 'register' = 'login';
+  protected activeTab: 'login' | 'register' = 'login';
 
-  username: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
+  protected username: string = '';
+  protected email: string = '';
+  protected password: string = '';
+  protected confirmPassword: string = '';
+
+  protected appEnum = AppEnum;
 
   constructor(
     private authService: AuthService,
@@ -26,7 +29,7 @@ export class AuthComponent {
     private toastService: ToastService
   ) {}
 
-  switchTab(tab: 'login' | 'register') {
+ protected switchTab(tab: 'login' | 'register') {
     this.activeTab = tab;
     this.username = '';
     this.email = '';
@@ -34,7 +37,7 @@ export class AuthComponent {
     this.confirmPassword = '';
   }
 
-  login() {
+ protected login() {
     this.authService
       .login({ email: this.email, password: this.password })
       .subscribe({
@@ -49,7 +52,7 @@ export class AuthComponent {
       });
   }
 
-  register() {
+ protected register() {
     if (this.password !== this.confirmPassword) {
       this.toastService.error('رمز عبور و تکرار آن یکسان نیست');
       return;

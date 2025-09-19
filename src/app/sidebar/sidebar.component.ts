@@ -16,6 +16,7 @@ import {
 } from 'lucide-angular';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { AppEnum } from '../enum/app-enum.enum';
 
 @Component({
   selector: 'app-sidebar',
@@ -39,6 +40,7 @@ export class SidebarComponent {
 
   showSettings = false;
 
+  protected appEnum = AppEnum;
   constructor(private authService: AuthService, private router: Router) {}
 
   toggleSettings() {

@@ -66,7 +66,8 @@
                 <span>{{appEnum.COMMODITY_TO_STORE}}</span>
             </div>
             <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
-                [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine">
+                [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" [theme]="'legacy'"
+                class="ag-theme-alpine">
             </ag-grid-angular>
         </div>
     </div>

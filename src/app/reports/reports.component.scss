@@ -38,6 +38,9 @@
 
 .reportTable {
   width: 92%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .item-style {
@@ -103,6 +106,67 @@ button {
 .clearClass {
   position: relative;
 }
+
+.export-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.export-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.pdf-btn lucide-icon {
+  color: #e53935;
+}
+
+.excel-btn lucide-icon {
+  color: #2e7d32;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 8px;
+  position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 9999;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 ::ng-deep {
   .ag-theme-custom {

@@ -11,8 +11,8 @@ export class CommodityTypeService {
 
   constructor(private http: HttpClient) {}
 
-  getCommodityTypes(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getCommodityTypes(): Observable<CommodityTypeModel[]> {
+    return this.http.get<CommodityTypeModel[]>(this.apiUrl);
   }
 
   getGenerateCodingCommodityType(): Observable<{ commodity_code: string }> {

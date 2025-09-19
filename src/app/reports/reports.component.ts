@@ -16,23 +16,33 @@ import {
   CommodityStoreroomService,
   commodityStoreroomModel,
 } from '../services/commodity-storeroom.service';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions, Theme } from 'ag-grid-community';
 import { AgGridModule } from 'ag-grid-angular';
+import { BlobOptions } from 'buffer';
+import { ExportService } from '../services/export.service';
+import { LucideAngularModule } from 'lucide-angular';
+import {
+  FileText,
+  FileSpreadsheet
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, AgGridModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, AgGridModule, LucideAngularModule],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
 })
 export class ReportsComponent implements OnInit {
+  
   appEnum = AppEnum;
   protected myForm: FormGroup;
   protected commodityList: CommodityModel[] = [];
   protected storeroomList: StoreroomModel[] = [];
   protected isBrowser: boolean = false;
-
+  protected showExportOption: boolean = false;
+  FileSpreadsheet= FileSpreadsheet;
+  FileText= FileText;
   columnDefs: ColDef[] = [
     {
       headerName: this.appEnum.VALUE,
@@ -84,7 +94,7 @@ export class ReportsComponent implements OnInit {
     },
   ];
 
-  gridApi!: any;
+  protected gridApi!: GridApi;
 
   defaultColDef: ColDef = {
     filter: true,
@@ -108,6 +118,7 @@ export class ReportsComponent implements OnInit {
     private storeroomService: StoreroomService,
     private location: Location,
     private commodityStoreroomService: CommodityStoreroomService,
+    private exportService: ExportService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.myForm = new FormGroup({
@@ -156,11 +167,43 @@ export class ReportsComponent implements OnInit {
       });
   }
 
-  clearSelection(value: string) {
+  protected clearSelection(value: string) {
     if (value === 'commodityId') {
       this.myForm.controls['commodityId'].patchValue('');
     } else {
       this.myForm.controls['storeroomId'].patchValue('');
     }
   }
+
+  protected exportTable(){
+this.showExportOption= !this.showExportOption
+  }
+
+  private downloadFile(blob: Blob, fileName: string) {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  
+  protected exportPdf() {
+    this.exportService
+      .exportToPDF(this.rowData, 'گزارش-جدول', this.columnDefs)
+      .subscribe((blob: Blob) => {
+        this.downloadFile(blob, 'گزارش-جدول.pdf');
+        this.showExportOption = false;
+      });
+  }
+  
+  protected exportExcel() {
+    this.exportService
+      .exportToExcel(this.rowData, 'گزارش-جدول', this.columnDefs)
+      .subscribe((blob: Blob) => {
+        this.downloadFile(blob, 'گزارش-جدول.xlsx');
+        this.showExportOption = false;
+      });
+  }
+  
 }

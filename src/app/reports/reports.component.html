@@ -27,8 +27,25 @@
         </div>
     </div>
     <div class="reportTable">
+        <div class="export-buttons">
+            <div class="tooltip">
+                <button class="export-btn pdf-btn" (click)="exportPdf()">
+                    <lucide-icon [img]="FileText" size="22"></lucide-icon>
+                </button>
+                <span class="tooltiptext">خروجی PDF</span>
+            </div>
+
+            <div class="tooltip">
+                <button class="export-btn excel-btn" (click)="exportExcel()">
+                    <lucide-icon [img]="FileSpreadsheet" size="22"></lucide-icon>
+                </button>
+                <span class="tooltiptext">خروجی Excel</span>
+            </div>
+        </div>
+
         <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
-            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" class="ag-theme-alpine">
+            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" [theme]="'legacy'"
+            class="ag-theme-alpine">
         </ag-grid-angular>
     </div>
 </div>

@@ -5,13 +5,7 @@
         </button>
         <div class="text">{{appEnum.COMMODITY_TYPE_LIST}}</div>
     </div>
-    <ag-grid-angular
-    *ngIf="isBrowser"
-    [columnDefs]="columnDefs"
-    [rowData]="rowData"
-    [gridOptions]="gridOptions"
-    [defaultColDef]="defaultColDef" [pagination]="true"
-     domLayout="autoHeight" class="ag-theme-alpine"
-      (gridReady)="onGridReady($event)"
-    ></ag-grid-angular>
+    <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
+        [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" [theme]="'legacy'"
+        class="ag-theme-alpine" (gridReady)="onGridReady($event)"></ag-grid-angular>
 </div>

@@ -40,13 +40,36 @@ export class ReportsComponent implements OnInit {
   protected commodityList: CommodityModel[] = [];
   protected storeroomList: StoreroomModel[] = [];
   protected isBrowser: boolean = false;
-  protected showExportOption: boolean = false;
   FileSpreadsheet= FileSpreadsheet;
   FileText= FileText;
   columnDefs: ColDef[] = [
     {
       headerName: this.appEnum.VALUE,
       field: 'value',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_DOCUMENT_TYPE,
+      field: 'documentType',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_DOCUMENT_TITLE,
+      field: 'documentTitle',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_DOCUMENT_CODE,
+      field: 'documentCode',
       cellStyle: { textAlign: 'right' },
       flex: 1,
       sortable: true,
@@ -175,10 +198,6 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  protected exportTable(){
-this.showExportOption= !this.showExportOption
-  }
-
   private downloadFile(blob: Blob, fileName: string) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -193,7 +212,6 @@ this.showExportOption= !this.showExportOption
       .exportToPDF(this.rowData, 'گزارش-جدول', this.columnDefs)
       .subscribe((blob: Blob) => {
         this.downloadFile(blob, 'گزارش-جدول.pdf');
-        this.showExportOption = false;
       });
   }
   
@@ -202,7 +220,6 @@ this.showExportOption= !this.showExportOption
       .exportToExcel(this.rowData, 'گزارش-جدول', this.columnDefs)
       .subscribe((blob: Blob) => {
         this.downloadFile(blob, 'گزارش-جدول.xlsx');
-        this.showExportOption = false;
       });
   }
   

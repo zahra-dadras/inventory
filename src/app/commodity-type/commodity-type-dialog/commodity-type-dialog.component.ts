@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CommodityEditDialogComponent } from '../../commodity/commodity-edit-dialog/commodity-edit-dialog.component';
 import moment from 'moment-jalaali';
 import { CommonModule } from '@angular/common';
 import { CommodityTypeService } from '../../services/commodity-type.service';
@@ -45,7 +44,7 @@ export class CommodityTypeDialogComponent implements OnInit {
   protected showDatePicker = false;
 
   constructor(
-    public dialogRef: MatDialogRef<CommodityEditDialogComponent>,
+    public dialogRef: MatDialogRef<CommodityTypeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private commodityTypeService: CommodityTypeService,

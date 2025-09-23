@@ -166,9 +166,6 @@ export class CommodityTypeComponent implements OnInit {
       next: (data) => {
         this.ngZone.run(() => {
           this.rowData = [...data];
-          if (this.gridApi) {
-            this.gridApi.setRowData(this.rowData);
-          }
           this.cdr.detectChanges(); 
         });
       },

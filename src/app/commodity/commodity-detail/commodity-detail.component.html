@@ -42,7 +42,6 @@
                 <input id="createDate" type="text" formControlName="createDate" placeholder="{{ appEnum.CREATE_DATE }}"
                     readonly (click)="openDatePicker()" />
 
-
                 <app-persian-datepicker *ngIf="showDatePicker" (dateSelected)="onDateSelected($event)">
                 </app-persian-datepicker>
             </div>
@@ -61,9 +60,11 @@
         </div>
     </div>
 
-    <div class="anbarToCommodity" *ngIf="mode === 'edit'">
-        <app-commodity-list [storeroomDialogData]="childData"
-            (editStoreroom)="storeroomDialog($event)"></app-commodity-list>
+    <div class="anbarToCommodity" *ngIf="mode === 'edit'">-->
+        <ag-grid-angular *ngIf="isBrowser" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions"
+            [defaultColDef]="defaultColDef" [pagination]="true" domLayout="autoHeight" [theme]="'legacy'"
+            class="ag-theme-alpine">
+        </ag-grid-angular>
     </div>
 
 </div>

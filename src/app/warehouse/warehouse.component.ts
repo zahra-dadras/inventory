@@ -141,9 +141,6 @@ export class WarehouseComponent {
               ? moment(item.createDate).locale('fa').format('jYYYY/jMM/jDD')
               : ' ',
           }));
-          if (this.gridApi) {
-            this.gridApi.setRowData(this.rowData);
-          }
           this.cdr.detectChanges(); 
         });
       },

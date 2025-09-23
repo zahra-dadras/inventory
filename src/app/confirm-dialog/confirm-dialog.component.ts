@@ -7,7 +7,11 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-
+import {
+  TriangleAlert,
+  LucideAngularModule
+  
+} from 'lucide-angular';
 export interface ConfirmDialogData {
   title: string;
   message: string;
@@ -18,11 +22,12 @@ export interface ConfirmDialogData {
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, LucideAngularModule],
   templateUrl: './confirm-dialog.component.html',
   styleUrl: './confirm-dialog.component.scss',
 })
 export class ConfirmDialogComponent {
+  Warning=TriangleAlert
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData

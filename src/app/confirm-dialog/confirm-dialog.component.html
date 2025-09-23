@@ -1,19 +1,15 @@
 <div class="confirm-dialog">
   <div class="dialog-header">
-    <mat-icon class="warning-icon">warning</mat-icon>
+    <lucide-icon [img]="Warning" class="warning-icon"></lucide-icon>
     <h2 class="dialog-title">{{ data.title }}</h2>
   </div>
 
-  <mat-dialog-content class="dialog-content">
-    <p>{{ data.message }}</p>
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end" class="dialog-actions">
-    <button mat-button class="cancel-btn" (click)="onCancel()">
+  <div class="dialog-content">{{ data.message }}</div>
+  <div class="dialog-actions"> <button mat-button class="cancel-btn" (click)="onCancel()">
       {{ data.cancelText || 'لغو' }}
     </button>
     <button mat-raised-button color="warn" class="confirm-btn" (click)="onConfirm()">
       {{ data.confirmText || 'تایید' }}
     </button>
-  </mat-dialog-actions>
+  </div>
 </div>

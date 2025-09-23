@@ -1,7 +1,12 @@
 .confirm-dialog {
   direction: rtl;
   min-width: 350px;
+  min-height: 150px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: space-around;
 
   .dialog-header {
     display: flex;
@@ -14,19 +19,13 @@
     }
 
     .dialog-title {
-      font-size: 1.4rem;
       font-weight: bold;
       color: #333;
     }
   }
 
   .dialog-content {
-    font-size: 1.1rem;
     color: #555;
-
-    p {
-      margin: 0;
-    }
   }
 
   .dialog-actions {

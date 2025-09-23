@@ -1,6 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
+  Inject,
+  NgZone,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import {
@@ -12,8 +16,6 @@ import {
 } from '@angular/forms';
 import { AppEnum } from '../../enum/app-enum.enum';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CommodityEditDialogComponent } from '../commodity-edit-dialog/commodity-edit-dialog.component';
-import { CommodityListComponent } from '../commodity-list/commodity-list.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CommodityTypeService } from '../../services/commodity-type.service';
@@ -25,6 +27,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PersianDatepickerComponent } from '../../persian-datepicker/persian-datepicker.component';
 import moment from 'moment-jalaali';
 import { ToastService } from '../../services/toast.service';
+import { AgGridModule } from 'ag-grid-angular';
+import { ColDef, GridOptions } from 'ag-grid-community';
+import { CommodityStoreroomService } from '../../services/commodity-storeroom.service';
 
 @Component({
   selector: 'app-commodity-detail',
@@ -33,16 +38,15 @@ import { ToastService } from '../../services/toast.service';
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    CommodityListComponent,
     MatDialogModule,
     MatDatepickerModule,
     PersianDatepickerComponent,
+    AgGridModule
   ],
   templateUrl: './commodity-detail.component.html',
   styleUrl: './commodity-detail.component.scss',
 })
 export class CommodityDetailComponent {
-  @ViewChild(CommodityListComponent) commodityList!: CommodityListComponent;
   protected appEnum = AppEnum;
   protected commodityTypeList: CommodityTypeModel[] = [];
   protected measurementUnitList: MeasurementUnitModel[] = [];
@@ -50,8 +54,92 @@ export class CommodityDetailComponent {
   protected showDatePicker = false;
  
   myForm: FormGroup;
-  childData: any;
+  // childData: any;
 
+  columnDefs: ColDef[] = [
+    {
+      headerName: this.appEnum.VALUE,
+      field: 'value',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_DOCUMENT_TYPE,
+      field: 'documentType',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_DOCUMENT_TITLE,
+      field: 'documentTitle',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_DOCUMENT_CODE,
+      field: 'documentCode',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_TYPE,
+      field: 'storeroomPersianTitle',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_MANAGER,
+      field: 'storeroomChairman',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_ID,
+      field: 'storeroomCode',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: this.appEnum.STOREROOM_TITLE,
+      field: 'storeroomTitle',
+      cellStyle: { textAlign: 'right' },
+      flex: 1,
+      sortable: true,
+      filter: true,
+    },
+  ];
+  isBrowser = false;
+  rowData: any[] = [];
+  gridApi!: any;
+
+  defaultColDef: ColDef = {
+    filter: true,
+  };
+
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+  }
+
+  gridOptions: GridOptions = {
+    rowModelType: 'clientSide',
+    domLayout: 'normal',
+    headerHeight: 40,
+    getRowHeight: () => 40,
+  };
 
   constructor(
     public dialog: MatDialog,
@@ -60,7 +148,11 @@ export class CommodityDetailComponent {
     private commodityTypeService: CommodityTypeService,
     private measurementUnitService: MeasurementUnitService,
     private commodityService: CommodityService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
+    private commodityStoreroomService: CommodityStoreroomService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.myForm = new FormGroup({
       commodityCode: new FormControl(
@@ -77,58 +169,62 @@ export class CommodityDetailComponent {
     });
   }
   ngOnInit(): void {
-    this.commodityTypeService.getCommodityTypes().subscribe({
-      next: (res) => {
-        this.commodityTypeList = res;
-      },
-      error: (err) => {
-        this.toastService.error(err.error.message);
-      },
-    });
-
-    this.measurementUnitService.getMeasurementUnits().subscribe({
-      next: (res) => {
-        this.measurementUnitList = res;
-      },
-      error: (err) => {
-        this.toastService.error(err.error.message);
-      },
-    });
-
-    if (this.route.snapshot.paramMap.has('id')) {
-      this.mode = 'edit';
-      this.commodityService
-        .getCommodityById(Number(this.route.snapshot.paramMap.get('id')))
-        .subscribe({
-          next: (res) => {
-            if (res.id) {
-              const patchedData = {
-                ...res,
-                createDate: res.createDate
-                  ? moment(res.createDate).locale('fa').format('jYYYY/jMM/jDD')
-                  : null,
-              };
-              this.myForm.patchValue(patchedData);
-              this.childData = { id: res.id };
-              this.commodityList.loadData(res.id);
-            }
-          },
-          error: (err) => {
-            this.toastService.error(err.error.message);
-          },
-        });
-    } else {
-      this.mode = 'create';
-
-      this.commodityService.generateCodeCommodity().subscribe({
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (this.isBrowser){
+      this.commodityTypeService.getCommodityTypes().subscribe({
         next: (res) => {
-          this.myForm.controls['commodityCode'].patchValue(res.commodityCode);
+          this.commodityTypeList = res;
         },
         error: (err) => {
           this.toastService.error(err.error.message);
         },
       });
+  
+      this.measurementUnitService.getMeasurementUnits().subscribe({
+        next: (res) => {
+          this.measurementUnitList = res;
+        },
+        error: (err) => {
+          this.toastService.error(err.error.message);
+        },
+      });
+  
+      if (this.route.snapshot.paramMap.has('id')) {
+        this.mode = 'edit';
+        this.commodityService
+          .getCommodityById(Number(this.route.snapshot.paramMap.get('id')))
+          .subscribe({
+            next: (res) => {
+              if (res.id) {
+                const patchedData = {
+                  ...res,
+                  createDate: res.createDate
+                    ? moment(res.createDate).locale('fa').format('jYYYY/jMM/jDD')
+                    : null,
+                };
+                this.myForm.patchValue(patchedData);
+                // this.childData = { id: res.id };
+                this.loadData(res.id);
+              }
+            },
+            error: (err) => {
+              this.toastService.error(err.error.message);
+            },
+          });
+      } else {
+        this.mode = 'create';
+  
+        this.commodityService.generateCodeCommodity().subscribe({
+          next: (res) => {
+            this.myForm.controls['commodityCode'].patchValue(res.commodityCode);
+          },
+          error: (err) => {
+            this.toastService.error(err.error.message);
+          },
+        });
+      }
     }
+    
   }
 
   onSubmit() {
@@ -180,26 +276,26 @@ export class CommodityDetailComponent {
     this.showDatePicker = false;
   }
 
-  storeroomDialog(value: any) {
-    const data = {
-      rowData: value,
-      commodityId: this.myForm.controls['id'].value,
-      mode: value ? 'edit' : 'create',
-    };
-    const dialogRef = this.dialog.open(CommodityEditDialogComponent, {
-      width: '450px',
-      height: '250px',
-      panelClass: 'custom-dialog-container',
-      data: data,
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      const id = this.myForm.controls['id'].value;
-      this.commodityList.loadData(id);
-    });
-  }
 
   closePage() {
     this.location.back();
+  }
+
+  loadData(id: number) {
+    this.commodityStoreroomService
+      .getCommodityStoreroomByCommodityId(id)
+      .subscribe({
+        next: (data) => {
+          this.ngZone.run(() => {
+            this.rowData = [...data];
+            if (this.gridApi) {
+              this.gridApi.setRowData(this.rowData);
+            }
+            this.cdr.detectChanges();
+          });
+        },
+        error: (err) => this.toastService.error(err.error.message),
+      });
   }
 }

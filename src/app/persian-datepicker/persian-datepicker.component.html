@@ -1,7 +1,7 @@
 <div class="datepicker-container">
   <div class="header">{{ currentMonth }}</div>
   <div class="days">
-    <button *ngFor="let d of days" (click)="selectDate(d)" [class.selected]="d === selectedDate">
+    <button *ngFor="let d of days" (click)="selectDate(d)">
       {{ d.split('/')[2] }}
     </button>
   </div>
